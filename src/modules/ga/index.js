@@ -1,3 +1,4 @@
+/* global SERVICE_URL */
 import guaTrackLinks from './vendor/gua-anchor';
 import debounce from '../../../node_modules/debounce';
 
