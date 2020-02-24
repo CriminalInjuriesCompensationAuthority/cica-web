@@ -1,5 +1,5 @@
 {% extends "template.njk" %}
-{% from "cica/modal/macro.njk" import govukModalDialogue %}
+{% from "cica/modal/macro.njk" import govukModal %}
 
 {% block pageTitle %}Claim criminal injuries compensation - GOV.UK{% endblock %}
 {% block head %}
@@ -116,7 +116,7 @@
     }) }}
 
     {% set sessionTimeoutHeading %}
-        Your session is due to expire in <span class="govuk-modal__time-remaining">5 minutes</span>
+        <span aria-live="assertive">Your session is due to expire in <span class="govuk-modal__time-remaining" aria-atomic="true" aria-live="assertive"></span></span>
     {% endset %}
     {% set sessionTimeoutDescription %}
         <p class="govuk-body">You have not done anything on the service for a while.</p>
@@ -131,33 +131,33 @@
         <p class="govuk-body">Your session has ended. You'll need to start your application again.</p>
     {% endset %}
 
-    {% call govukModalDialogue({
+    {% call govukModal({
         id: "session-timeout",
         role: "alertdialog",
         hasCloseButton: "false",
         heading: {
             html: sessionTimeoutHeading
         },
-        description: {
+        content: {
             html: sessionTimeoutDescription
         }
     }) %}
         {{ govukButton({
             text: "Resume application",
             type: "button",
-            classes: "govuk-modal-dialogue__continue"
+            classes: "govuk-modal__continue"
         }) }}
         <!-- <a href="{{ basePath }}" class="govuk-modal-dialogue__cancel govuk-body govuk-link govuk-link--no-visited-state">Start again</a> -->
     {% endcall %}
 
-    {% call govukModalDialogue({
+    {% call govukModal({
         id: "session-ended",
         role: "alertdialog",
         hasCloseButton: "false",
         heading: {
             html: sessionEndedHeading
         },
-        description: {
+        content: {
             html: sessionEndedDescription
         }
     }) %}

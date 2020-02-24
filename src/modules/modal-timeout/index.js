@@ -28,8 +28,20 @@ function createTimeoutModal(window) {
         const durationInSeconds = Math.floor(duration / 1000);
         const minutes = Number.parseInt(durationInSeconds / 60, 10);
         const seconds = durationInSeconds % 60;
+        let minutesText = '';
+        let secondsText = '';
+        let conjunctionText = '';
 
-        return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+        if (minutes) {
+            minutesText = minutes === 1 ? `${minutes} minute` : `${minutes} minutes`;
+        }
+        if (seconds) {
+            secondsText = seconds === 1 ? `${seconds} second` : `${seconds} seconds`;
+        }
+        if (minutes && seconds) {
+            conjunctionText = ' and ';
+        }
+        return `${minutesText}${conjunctionText}${secondsText}`;
     }
 
     function updateTimeRemainingText(el, timeRemaining, interval, dialogBox) {
@@ -75,9 +87,7 @@ function createTimeoutModal(window) {
     }
 
     function setUpModal(settings) {
-        modal = new window.GOVUKFrontend.ModalDialogue(settings.dialogBox).init(
-            settings.modalOptions
-        );
+        modal = new window.GOVUKFrontend.Modal(settings.dialogBox).init(settings.modalOptions);
 
         settings.dialogBox.addEventListener('TIMED_OUT', () => {
             modal.close();
