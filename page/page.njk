@@ -116,19 +116,17 @@
     }) }}
 
     {% set sessionTimeoutHeading %}
-        <span aria-live="assertive">Your session is due to expire in <span class="govuk-modal__time-remaining" aria-atomic="true" aria-live="assertive"></span></span>
+        <span aria-live="assertive">Your application will time out in <span class="govuk-modal__time-remaining" aria-atomic="true" aria-live="assertive"></span></span>
     {% endset %}
     {% set sessionTimeoutDescription %}
-        <p class="govuk-body">You have not done anything on the service for a while.</p>
-        <p class="govuk-body">Your session will end in <span class="govuk-modal__time-remaining">5 minutes</span> if you do not do anything on the page. You'll need to start your application again if that happens.</p>
+        <p class="govuk-body">We'll reset your application if you do not respond. We do this to keep your information secure.</p>
     {% endset %}
 
     {% set sessionEndedHeading %}
-        Your session has ended
+        Your application has timed out
     {% endset %}
     {% set sessionEndedDescription %}
-        <p class="govuk-body">You have not done anything on the service for a while.</p>
-        <p class="govuk-body">Your session has ended. You'll need to start your application again.</p>
+        <p class="govuk-body">You'll have to start your application again.</p>
     {% endset %}
 
     {% call govukModal({
@@ -143,7 +141,7 @@
         }
     }) %}
         {{ govukButton({
-            text: "Resume application",
+            text: "Continue application",
             type: "button",
             classes: "govuk-modal__continue"
         }) }}
