@@ -1,5 +1,5 @@
 /* global SESSION_DURATION */
-import createCicaGa from '../modules/ga';
+import createCicaGa from '../modules/ga/thing';
 import {createAutocomplete} from '../modules/autocomplete/autocomplete';
 import createCookieBanner from '../modules/cookie-banner';
 import createCookiePreference from '../modules/cookie-preference';
