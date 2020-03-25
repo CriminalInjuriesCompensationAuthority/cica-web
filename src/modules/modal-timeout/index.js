@@ -1,4 +1,4 @@
-/* global SESSION_DURATION */
+/* global SESSION_DURATION, CustomEvent */
 import AjaxRequest from '../ajax-request';
 
 // source: https://developer.mozilla.org/en-US/docs/Web/API/CustomEvent/CustomEvent
@@ -21,6 +21,13 @@ import AjaxRequest from '../ajax-request';
 })();
 
 function createTimeoutModal(window) {
+    // We need to clear the timeouts when an application is resumed. This is
+    // due the same element being used each time the "session timing out" modal
+    // appears. If we don't clear the timeouts, then there will be as many updates
+    // per second as as many modals there has been. i.e. if you are seeing the
+    // "session timing out" modal for the 3rd time, there will be 3 timeouts every
+    // second that will update the DOM.
+    // this is a cache of all timeouts that is cleared when needed.
     let timeoutsArray = [];
     let modal;
 
@@ -48,6 +55,7 @@ function createTimeoutModal(window) {
         const element = el;
         element.innerHTML = convertSecondsToMinutesAndSeconds(timeRemaining);
 
+        window.clearTimeout(timeoutsArray.pop()); // remove last item in the array as it has done its job.
         const newTimeRemaining = Math.round((timeRemaining - interval) / interval) * interval;
         // if there is an repeating interval, and if the time remaining
         // still has a value that can be reduced by `interval`.
@@ -72,7 +80,9 @@ function createTimeoutModal(window) {
         new AjaxRequest('/', 'GET')
             .then(() => {
                 settings.dialogBoxResumeCTA.removeEventListener('click', resumeClickHandler);
-                timeoutsArray.forEach(x => window.clearTimeout(x));
+                timeoutsArray.forEach(x => {
+                    window.clearTimeout(x);
+                });
                 timeoutsArray = [];
                 modal.close();
                 // eslint-disable-next-line no-use-before-define
@@ -83,7 +93,10 @@ function createTimeoutModal(window) {
                     dialogBoxResumeCTA: settings.dialogBoxResumeCTA
                 });
             })
-            .catch(err => {});
+            .catch(() => {
+                const event = new CustomEvent('MODAL_ERROR_RESUME_FAILURE');
+                settings.dialogBox.dispatchEvent(event);
+            });
     }
 
     function setUpModal(settings) {

@@ -1,5 +1,5 @@
 /* global SESSION_DURATION */
-import createCicaGa from '../modules/ga/thing';
+import createCicaGa from '../modules/ga';
 import {createAutocomplete} from '../modules/autocomplete/autocomplete';
 import createCookieBanner from '../modules/cookie-banner';
 import createCookiePreference from '../modules/cookie-preference';
@@ -33,8 +33,13 @@ import createTimeoutModal from '../modules/modal-timeout';
             const timeoutEndedModal = createTimeoutModal(window);
             timeoutEndedModal.init({
                 element: '#govuk-modal-session-ended',
-                resumeElement: '.govuk-modal__continue',
-                showIn: [0]
+                resumeElement: '.govuk-modal__continue'
+            });
+        });
+        sessionTimeoutModalElement.addEventListener('MODAL_ERROR_RESUME_FAILURE', () => {
+            const timeoutEndedModal = createTimeoutModal(window);
+            timeoutEndedModal.init({
+                element: '#govuk-modal-session-resume-error'
             });
         });
 

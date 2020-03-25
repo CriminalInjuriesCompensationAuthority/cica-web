@@ -11,6 +11,12 @@
 {% set sessionEndedDescription %}
     <p class="govuk-body">You'll have to start your application again.</p>
 {% endset %}
+{% set sessionResumeErrorHeading %}
+    Something went wrong
+{% endset %}
+{% set sessionResumeErrorDescription %}
+    <p class="govuk-body">We were unable to resume your application. You'll have to start your application again.</p>
+{% endset %}
             
 {% call govukModal({
     id: "session-timing-out",
@@ -40,6 +46,24 @@
     },
     content: {
         html: sessionEndedDescription
+    }
+}) %}
+    {{ govukButton({
+        text: "Start again",
+        type: "button",
+        href: "/apply"
+    }) }}
+{% endcall %}
+
+{% call govukModal({
+    id: "session-resume-error",
+    role: "alertdialog",
+    hasCloseButton: "true",
+    heading: {
+        html: sessionResumeErrorHeading
+    },
+    content: {
+        html: sessionResumeErrorDescription
     }
 }) %}
     {{ govukButton({

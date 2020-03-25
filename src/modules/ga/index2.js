@@ -3,8 +3,7 @@ import debounce from 'debounce';
 import guaTrackLinks from './gua-anchor';
 
 function createCicaGa(window) {
-    // eslint-disable-next-line no-undef
-    guaTrackLinks(window.CICA.SERVICE_URL, window);
+    guaTrackLinks(SERVICE_URL, window);
     // https://developers.google.com/analytics/devguides/collection/gtagjs/events
     // gtag('event', <action>, {
     //     'event_category': <category>,
@@ -20,14 +19,7 @@ function createCicaGa(window) {
     };
 
     function send(options) {
-        // https://developers.google.com/analytics/devguides/collection/gtagjs/events
-        // gtag('event', <action>, {
-        //     'event_category': <category>,
-        //     'event_label': <label>,
-        //     'value': <value>
-        // });
-        // eslint-disable-next-line prefer-object-spread
-        const gtagOptions = Object.assign({}, defaultOptions, options);
+        const gtagOptions = {...defaultOptions, ...options};
         window.gtag(gtagOptions.type, gtagOptions.action, {
             event_category: gtagOptions.category,
             event_label: gtagOptions.label,
@@ -36,9 +28,11 @@ function createCicaGa(window) {
         });
     }
 
-    guaTrackLinks(SERVICE_URL, window);
+    /* * ******************************************* * */
+    /* * * TRACKING HANDLERS START                 * * */
+    /* * ******************************************* * */
 
-    window.document.querySelectorAll('[data-module*="govuk-details"]').forEach(element => {
+    function detailsElementHandler(element) {
         element.addEventListener(
             'click',
             () => {
@@ -56,16 +50,16 @@ function createCicaGa(window) {
                         .innerText;
                     send({
                         action: 'open',
-                        category: 'govuk-details',
+                        category: 'details-tag',
                         label: detailsTagText
                     });
                 }
             },
             false
         );
-    });
+    }
 
-    if (window.document.querySelectorAll('.ga-event--scrollthreshold').length) {
+    function scrollThresholdHandler() {
         const {body} = window.document;
         const html = window.document.documentElement;
         const documentHeight = Math.max(
@@ -102,22 +96,27 @@ function createCicaGa(window) {
         );
     }
 
-    const modalElements = window.document.querySelectorAll('[data-module*="govuk-modal"]');
+    /* * ******************************************* * */
+    /* * * TRACKING HANDLERS END                   * * */
+    /* * ******************************************* * */
 
-    if (modalElements.length) {
-        modalElements.forEach(element => {
-            element.addEventListener('MODAL_OPEN', () => {
-                send({
-                    action: 'open',
-                    category: 'govuk-modal',
-                    label: element.id
-                });
-            });
+    function setUpGAEventTracking() {
+        const trackableElements = window.document.querySelectorAll('[data-module], .ga-event');
+        // GOVUK modules, and custom events tracking.
+        trackableElements.forEach(element => {
+            if (element.classList.contains('ga-event--scrollthreshold')) {
+                scrollThresholdHandler();
+                return;
+            }
+            const dataModuleId = element.getAttribute('data-module');
+            if (dataModuleId === 'govuk-details') {
+                detailsElementHandler(element);
+            }
         });
     }
 
     return Object.freeze({
-        send
+        setUpGAEventTracking
     });
 }
 

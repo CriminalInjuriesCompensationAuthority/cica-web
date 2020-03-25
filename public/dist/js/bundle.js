@@ -5806,7 +5806,7 @@ module.exports = g;
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var core_js_modules_es_string_starts_with__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! core-js/modules/es.string.starts-with */ "./node_modules/core-js/modules/es.string.starts-with.js");
 /* harmony import */ var core_js_modules_es_string_starts_with__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_string_starts_with__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _modules_ga_thing__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../modules/ga/thing */ "./src/modules/ga/thing.js");
+/* harmony import */ var _modules_ga__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../modules/ga */ "./src/modules/ga/index.js");
 /* harmony import */ var _modules_autocomplete_autocomplete__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../modules/autocomplete/autocomplete */ "./src/modules/autocomplete/autocomplete.js");
 /* harmony import */ var _modules_modal_timeout__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../modules/modal-timeout */ "./src/modules/modal-timeout/index.js");
 
@@ -5819,7 +5819,7 @@ __webpack_require__.r(__webpack_exports__);
 (function () {
   // const cicaGa = createCicaGa(window);
   // cicaGa.setUpGAEventTracking();
-  Object(_modules_ga_thing__WEBPACK_IMPORTED_MODULE_1__["default"])(window);
+  Object(_modules_ga__WEBPACK_IMPORTED_MODULE_1__["default"])(window);
   var autocomplete = Object(_modules_autocomplete_autocomplete__WEBPACK_IMPORTED_MODULE_2__["createAutocomplete"])(window);
   autocomplete.init('.govuk-select');
   var pathName = window.location.pathname;
@@ -5830,8 +5830,13 @@ __webpack_require__.r(__webpack_exports__);
       var timeoutEndedModal = Object(_modules_modal_timeout__WEBPACK_IMPORTED_MODULE_3__["default"])(window);
       timeoutEndedModal.init({
         element: '#govuk-modal-session-ended',
-        resumeElement: '.govuk-modal__continue',
-        showIn: [0]
+        resumeElement: '.govuk-modal__continue'
+      });
+    });
+    sessionTimeoutModalElement.addEventListener('MODAL_ERROR_RESUME_FAILURE', function () {
+      var timeoutEndedModal = Object(_modules_modal_timeout__WEBPACK_IMPORTED_MODULE_3__["default"])(window);
+      timeoutEndedModal.init({
+        element: '#govuk-modal-session-resume-error'
       });
     });
     var timeoutModal = Object(_modules_modal_timeout__WEBPACK_IMPORTED_MODULE_3__["default"])(window);
@@ -6104,208 +6109,10 @@ function createAutocomplete(window) {
 
 /***/ }),
 
-/***/ "./src/modules/ga/thing.js":
-/*!*********************************!*\
-  !*** ./src/modules/ga/thing.js ***!
-  \*********************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var core_js_modules_es_array_for_each__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! core-js/modules/es.array.for-each */ "./node_modules/core-js/modules/es.array.for-each.js");
-/* harmony import */ var core_js_modules_es_array_for_each__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_array_for_each__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var core_js_modules_es_array_splice__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! core-js/modules/es.array.splice */ "./node_modules/core-js/modules/es.array.splice.js");
-/* harmony import */ var core_js_modules_es_array_splice__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_array_splice__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var core_js_modules_es_object_assign__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! core-js/modules/es.object.assign */ "./node_modules/core-js/modules/es.object.assign.js");
-/* harmony import */ var core_js_modules_es_object_assign__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_object_assign__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var core_js_modules_es_object_freeze__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! core-js/modules/es.object.freeze */ "./node_modules/core-js/modules/es.object.freeze.js");
-/* harmony import */ var core_js_modules_es_object_freeze__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_object_freeze__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! core-js/modules/web.dom-collections.for-each */ "./node_modules/core-js/modules/web.dom-collections.for-each.js");
-/* harmony import */ var core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _vendor_gua_anchor__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./vendor/gua-anchor */ "./src/modules/ga/vendor/gua-anchor.js");
-/* harmony import */ var _node_modules_debounce__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../../node_modules/debounce */ "./node_modules/debounce/index.js");
-/* harmony import */ var _node_modules_debounce__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_node_modules_debounce__WEBPACK_IMPORTED_MODULE_6__);
-
-
-
-
-
-
-/* global SERVICE_URL */
-
-
-
-function createCicaGa(window) {
-  function send(options) {
-    // https://developers.google.com/analytics/devguides/collection/gtagjs/events
-    // gtag('event', <action>, {
-    //     'event_category': <category>,
-    //     'event_label': <label>,
-    //     'value': <value>
-    // });
-    var defaultOptions = {
-      type: 'event',
-      // <String>
-      action: 'click',
-      // <String>
-      category: 'category',
-      // <String>
-      label: undefined,
-      // <String>
-      value: undefined // non-negative <Integer>
-
-    }; // eslint-disable-next-line prefer-object-spread
-
-    var gtagOptions = Object.assign({}, defaultOptions, options);
-    window.gtag(gtagOptions.type, gtagOptions.action, {
-      event_category: gtagOptions.category,
-      event_label: gtagOptions.label,
-      value: gtagOptions.value,
-      event_callback: gtagOptions.callback
-    });
-  }
-
-  Object(_vendor_gua_anchor__WEBPACK_IMPORTED_MODULE_5__["default"])("http://localhost:3000", window);
-  window.document.querySelectorAll('[data-module*="govuk-details"]').forEach(function (element) {
-    element.addEventListener('click', function () {
-      // the open attribute is added when the user reveals
-      // the content of the details element.
-      // click it from closed to open will result in
-      // the open variable having a value of `null`.
-      // checking for `null` will tell us that the element
-      // is being opened (and not closed). We can then send
-      // a GA event for the user opening the details element.
-      var open = element.getAttribute('open');
-
-      if (open === null) {
-        var detailsTagText = element.querySelector('.govuk-details__summary-text').innerText;
-        send({
-          action: 'open',
-          category: 'govuk-details',
-          label: detailsTagText
-        });
-      }
-    }, false);
-  });
-
-  if (window.document.querySelectorAll('.ga-event--scrollthreshold').length) {
-    var body = window.document.body;
-    var html = window.document.documentElement;
-    var documentHeight = Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight);
-    var scrollDepthTargets = [10, 25, 50, 75, 90, 100];
-    window.document.addEventListener('scroll', _node_modules_debounce__WEBPACK_IMPORTED_MODULE_6___default()(function () {
-      if (!scrollDepthTargets.length) {
-        return;
-      }
-
-      var currentScrollTop = window.document.documentElement.scrollTop;
-      var documentScrollPosition = Math.floor(currentScrollTop / documentHeight * 100); // add on the equivalent percentage for an entire screen length
-      // because we are measuring from the bottom, not the top.
-
-      documentScrollPosition += Math.floor(window.screen.height / documentHeight * 100);
-      scrollDepthTargets.forEach(function (target, index) {
-        if (documentScrollPosition >= target) {
-          send({
-            category: 'scrolling',
-            action: "".concat(target, "%"),
-            label: window.location.href
-          });
-          scrollDepthTargets.splice(index, 1);
-        }
-      });
-    }, 100), false);
-  }
-
-  var modalElements = window.document.querySelectorAll('[data-module*="govuk-modal"]');
-
-  if (modalElements.length) {
-    modalElements.forEach(function (element) {
-      element.addEventListener('MODAL_OPEN', function () {
-        send({
-          action: 'open',
-          category: 'govuk-modal',
-          label: element.id
-        });
-      });
-    });
-  } // trackEvent(
-  //     window.document.querySelectorAll('[data-module*="govuk-details"]'),
-  //     'click',
-  //     element => {
-  //         // the open attribute is added when the user reveals
-  //         // the content of the details element.
-  //         // click it from closed to open will result in
-  //         // the open variable having a value of `null`.
-  //         // checking for `null` will tell us that the element
-  //         // is being opened (and not closed). We can then send
-  //         // a GA event for the user opening the details element.
-  //         const open = element.getAttribute('open');
-  //         if (open === null) {
-  //             const detailsTagText = element.querySelector('.govuk-details__summary-text')
-  //                 .innerText;
-  //             send({
-  //                 action: 'open',
-  //                 category: 'details-tag',
-  //                 label: detailsTagText
-  //             });
-  //         }
-  //     }
-  // );
-  // if (window.document.querySelectorAll('.ga-event--scrollthreshold').length) {
-  //     console.log('1111111111111');
-  //     const {body} = window.document;
-  //     const html = window.document.documentElement;
-  //     const documentHeight = Math.max(
-  //         body.scrollHeight,
-  //         body.offsetHeight,
-  //         html.clientHeight,
-  //         html.scrollHeight,
-  //         html.offsetHeight
-  //     );
-  //     const scrollDepthTargets = [10, 25, 50, 75, 90, 100];
-  //     console.log('222222222222');
-  //     console.log(scrollDepthTargets);
-  //     trackEvent([window.document], 'scroll', () =>
-  //         debounce(() => {
-  //             console.log('44444444444444444444444');
-  //             if (!scrollDepthTargets.length) {
-  //                 return;
-  //             }
-  //             const currentScrollTop = window.document.documentElement.scrollTop;
-  //             let documentScrollPosition = Math.floor((currentScrollTop / documentHeight) * 100);
-  //             // add on the equivalent percentage for an entire screen length
-  //             // because we are measuring from the bottom, not the top.
-  //             documentScrollPosition += Math.floor((window.screen.height / documentHeight) * 100);
-  //             scrollDepthTargets.forEach((target, index) => {
-  //                 if (documentScrollPosition >= target) {
-  //                     send({
-  //                         category: 'scrolling',
-  //                         action: `${target}%`,
-  //                         label: window.location.href
-  //                     });
-  //                     scrollDepthTargets.splice(index, 1);
-  //                 }
-  //             });
-  //         }, 100)
-  //     );
-  // }
-
-
-  return Object.freeze({
-    // trackEvent,
-    send: send
-  });
-}
-
-/* harmony default export */ __webpack_exports__["default"] = (createCicaGa);
-
-/***/ }),
-
-/***/ "./src/modules/ga/vendor/gua-anchor.js":
-/*!*********************************************!*\
-  !*** ./src/modules/ga/vendor/gua-anchor.js ***!
-  \*********************************************/
+/***/ "./src/modules/ga/gua-anchor.js":
+/*!**************************************!*\
+  !*** ./src/modules/ga/gua-anchor.js ***!
+  \**************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -6436,6 +6243,142 @@ function guaTrackLinks(domain, window) {
 
 /***/ }),
 
+/***/ "./src/modules/ga/index.js":
+/*!*********************************!*\
+  !*** ./src/modules/ga/index.js ***!
+  \*********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var core_js_modules_es_array_for_each__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! core-js/modules/es.array.for-each */ "./node_modules/core-js/modules/es.array.for-each.js");
+/* harmony import */ var core_js_modules_es_array_for_each__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_array_for_each__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var core_js_modules_es_array_splice__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! core-js/modules/es.array.splice */ "./node_modules/core-js/modules/es.array.splice.js");
+/* harmony import */ var core_js_modules_es_array_splice__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_array_splice__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var core_js_modules_es_object_assign__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! core-js/modules/es.object.assign */ "./node_modules/core-js/modules/es.object.assign.js");
+/* harmony import */ var core_js_modules_es_object_assign__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_object_assign__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var core_js_modules_es_object_freeze__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! core-js/modules/es.object.freeze */ "./node_modules/core-js/modules/es.object.freeze.js");
+/* harmony import */ var core_js_modules_es_object_freeze__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_object_freeze__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! core-js/modules/web.dom-collections.for-each */ "./node_modules/core-js/modules/web.dom-collections.for-each.js");
+/* harmony import */ var core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var debounce__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! debounce */ "./node_modules/debounce/index.js");
+/* harmony import */ var debounce__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(debounce__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _gua_anchor__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./gua-anchor */ "./src/modules/ga/gua-anchor.js");
+
+
+
+
+
+
+/* global SERVICE_URL */
+
+
+
+function createCicaGa(window) {
+  function send(options) {
+    // https://developers.google.com/analytics/devguides/collection/gtagjs/events
+    // gtag('event', <action>, {
+    //     'event_category': <category>,
+    //     'event_label': <label>,
+    //     'value': <value>
+    // });
+    var defaultOptions = {
+      type: 'event',
+      // <String>
+      action: 'click',
+      // <String>
+      category: 'category',
+      // <String>
+      label: undefined,
+      // <String>
+      value: undefined // non-negative <Integer>
+
+    }; // eslint-disable-next-line prefer-object-spread
+
+    var gtagOptions = Object.assign({}, defaultOptions, options);
+    window.gtag(gtagOptions.type, gtagOptions.action, {
+      event_category: gtagOptions.category,
+      event_label: gtagOptions.label,
+      value: gtagOptions.value,
+      event_callback: gtagOptions.callback
+    });
+  }
+
+  Object(_gua_anchor__WEBPACK_IMPORTED_MODULE_6__["default"])("http://localhost:3000", window);
+  window.document.querySelectorAll('[data-module*="govuk-details"]').forEach(function (element) {
+    element.addEventListener('click', function () {
+      // the open attribute is added when the user reveals
+      // the content of the details element.
+      // click it from closed to open will result in
+      // the open variable having a value of `null`.
+      // checking for `null` will tell us that the element
+      // is being opened (and not closed). We can then send
+      // a GA event for the user opening the details element.
+      var open = element.getAttribute('open');
+
+      if (open === null) {
+        var detailsTagText = element.querySelector('.govuk-details__summary-text').innerText;
+        send({
+          action: 'open',
+          category: 'govuk-details',
+          label: detailsTagText
+        });
+      }
+    }, false);
+  });
+
+  if (window.document.querySelectorAll('.ga-event--scrollthreshold').length) {
+    var body = window.document.body;
+    var html = window.document.documentElement;
+    var documentHeight = Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight);
+    var scrollDepthTargets = [10, 25, 50, 75, 90, 100];
+    window.document.addEventListener('scroll', debounce__WEBPACK_IMPORTED_MODULE_5___default()(function () {
+      if (!scrollDepthTargets.length) {
+        return;
+      }
+
+      var currentScrollTop = window.document.documentElement.scrollTop;
+      var documentScrollPosition = Math.floor(currentScrollTop / documentHeight * 100); // add on the equivalent percentage for an entire screen length
+      // because we are measuring from the bottom, not the top.
+
+      documentScrollPosition += Math.floor(window.screen.height / documentHeight * 100);
+      scrollDepthTargets.forEach(function (target, index) {
+        if (documentScrollPosition >= target) {
+          send({
+            category: 'scrolling',
+            action: "".concat(target, "%"),
+            label: window.location.href
+          });
+          scrollDepthTargets.splice(index, 1);
+        }
+      });
+    }, 100), false);
+  }
+
+  var modalElements = window.document.querySelectorAll('[data-module*="govuk-modal"]');
+
+  if (modalElements.length) {
+    modalElements.forEach(function (element) {
+      element.addEventListener('MODAL_OPEN', function () {
+        send({
+          action: 'open',
+          category: 'govuk-modal',
+          label: element.id
+        });
+      });
+    });
+  }
+
+  return Object.freeze({
+    send: send
+  });
+}
+
+/* harmony default export */ __webpack_exports__["default"] = (createCicaGa);
+
+/***/ }),
+
 /***/ "./src/modules/modal-timeout/index.js":
 /*!********************************************!*\
   !*** ./src/modules/modal-timeout/index.js ***!
@@ -6468,7 +6411,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-/* global SESSION_DURATION */
+/* global SESSION_DURATION, CustomEvent */
  // source: https://developer.mozilla.org/en-US/docs/Web/API/CustomEvent/CustomEvent
 // eslint-disable-next-line consistent-return
 
@@ -6494,6 +6437,13 @@ __webpack_require__.r(__webpack_exports__);
 })();
 
 function createTimeoutModal(window) {
+  // We need to clear the timeouts when an application is resumed. This is
+  // due the same element being used each time the "session timing out" modal
+  // appears. If we don't clear the timeouts, then there will be as many updates
+  // per second as as many modals there has been. i.e. if you are seeing the
+  // "session timing out" modal for the 3rd time, there will be 3 timeouts every
+  // second that will update the DOM.
+  // this is a cache of all timeouts that is cleared when needed.
   var timeoutsArray = [];
   var modal;
 
@@ -6521,8 +6471,11 @@ function createTimeoutModal(window) {
   }
 
   function updateTimeRemainingText(el, timeRemaining, interval, dialogBox) {
+    console.log(timeoutsArray, timeoutsArray.length, interval, timeRemaining, timeRemaining >= interval);
     var element = el;
     element.innerHTML = convertSecondsToMinutesAndSeconds(timeRemaining);
+    window.clearTimeout(timeoutsArray.pop()); // remove last item in the array as it has done its job.
+
     var newTimeRemaining = Math.round((timeRemaining - interval) / interval) * interval; // if there is an repeating interval, and if the time remaining
     // still has a value that can be reduced by `interval`.
 
@@ -6540,7 +6493,8 @@ function createTimeoutModal(window) {
     new _ajax_request__WEBPACK_IMPORTED_MODULE_7__["default"]('/', 'GET').then(function () {
       settings.dialogBoxResumeCTA.removeEventListener('click', resumeClickHandler);
       timeoutsArray.forEach(function (x) {
-        return window.clearTimeout(x);
+        console.log(x);
+        window.clearTimeout(x);
       });
       timeoutsArray = [];
       modal.close(); // eslint-disable-next-line no-use-before-define
@@ -6551,7 +6505,10 @@ function createTimeoutModal(window) {
         showIn: settings.showIn,
         dialogBoxResumeCTA: settings.dialogBoxResumeCTA
       });
-    }).catch(function (err) {});
+    }).catch(function () {
+      var event = new CustomEvent('MODAL_ERROR_RESUME_FAILURE');
+      settings.dialogBox.dispatchEvent(event);
+    });
   }
 
   function setUpModal(settings) {
@@ -6561,6 +6518,7 @@ function createTimeoutModal(window) {
     });
     var timeRemainingElements = settings.dialogBox.querySelectorAll('.govuk-modal__time-remaining');
     timeRemainingElements.forEach(function (el) {
+      console.log('here 1');
       updateTimeRemainingText(el, 15000, 1000, settings.dialogBox);
     });
 
