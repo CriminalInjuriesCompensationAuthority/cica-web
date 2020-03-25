@@ -207,6 +207,9 @@ Modal.prototype.handleOpen = function (e) {
   if (typeof this.options.onOpen === 'function') {
     this.options.onOpen.call(this);
   }
+
+  var event = new CustomEvent('MODAL_OPEN');
+  this.module.dispatchEvent(event);
 };
 
 Modal.prototype.handleClose = function (e) {
@@ -228,6 +231,9 @@ Modal.prototype.handleClose = function (e) {
   if (typeof this.options.onClose === 'function') {
     this.options.onClose.call(this);
   }
+
+  var event = new CustomEvent('MODAL_CLOSE');
+  this.module.dispatchEvent(event);
 };
 
 Modal.prototype.handleFocus = function () {
@@ -5819,7 +5825,7 @@ __webpack_require__.r(__webpack_exports__);
   var pathName = window.location.pathname;
 
   if (pathName.startsWith('/apply')) {
-    var sessionTimeoutModalElement = window.document.querySelector('#govuk-modal-session-timeout');
+    var sessionTimeoutModalElement = window.document.querySelector('#govuk-modal-session-timing-out');
     sessionTimeoutModalElement.addEventListener('TIMED_OUT', function () {
       var timeoutEndedModal = Object(_modules_modal_timeout__WEBPACK_IMPORTED_MODULE_3__["default"])(window);
       timeoutEndedModal.init({
@@ -5830,7 +5836,7 @@ __webpack_require__.r(__webpack_exports__);
     });
     var timeoutModal = Object(_modules_modal_timeout__WEBPACK_IMPORTED_MODULE_3__["default"])(window);
     timeoutModal.init({
-      element: '#govuk-modal-session-timeout',
+      element: '#govuk-modal-session-timing-out',
       resumeElement: '.govuk-modal__continue',
       showIn: [// show a modal at two-thirds, and fourteen-fifteenths of the session
       // length (rounded down to the nearest 1000).
@@ -6131,43 +6137,26 @@ __webpack_require__.r(__webpack_exports__);
 
 
 function createCicaGa(window) {
-  // function trackEvent(elements, eventType, eventHandler) {
-  //     elements.forEach(element => {
-  //         element.addEventListener(
-  //             eventType,
-  //             () => {
-  //                 console.log({
-  //                     element,
-  //                     eventType,
-  //                     YEAH: eventHandler.toString()
-  //                 });
-  //                 eventHandler(element);
-  //             },
-  //             false
-  //         );
-  //     });
-  // }
-  // https://developers.google.com/analytics/devguides/collection/gtagjs/events
-  // gtag('event', <action>, {
-  //     'event_category': <category>,
-  //     'event_label': <label>,
-  //     'value': <value>
-  // });
-  var defaultOptions = {
-    type: 'event',
-    // <String>
-    action: 'click',
-    // <String>
-    category: 'category',
-    // <String>
-    label: undefined,
-    // <String>
-    value: undefined // non-negative <Integer>
-
-  };
-
   function send(options) {
-    // eslint-disable-next-line prefer-object-spread
+    // https://developers.google.com/analytics/devguides/collection/gtagjs/events
+    // gtag('event', <action>, {
+    //     'event_category': <category>,
+    //     'event_label': <label>,
+    //     'value': <value>
+    // });
+    var defaultOptions = {
+      type: 'event',
+      // <String>
+      action: 'click',
+      // <String>
+      category: 'category',
+      // <String>
+      label: undefined,
+      // <String>
+      value: undefined // non-negative <Integer>
+
+    }; // eslint-disable-next-line prefer-object-spread
+
     var gtagOptions = Object.assign({}, defaultOptions, options);
     window.gtag(gtagOptions.type, gtagOptions.action, {
       event_category: gtagOptions.category,
@@ -6193,7 +6182,7 @@ function createCicaGa(window) {
         var detailsTagText = element.querySelector('.govuk-details__summary-text').innerText;
         send({
           action: 'open',
-          category: 'details-tag',
+          category: 'govuk-details',
           label: detailsTagText
         });
       }
@@ -6226,6 +6215,20 @@ function createCicaGa(window) {
         }
       });
     }, 100), false);
+  }
+
+  var modalElements = window.document.querySelectorAll('[data-module*="govuk-modal"]');
+
+  if (modalElements.length) {
+    modalElements.forEach(function (element) {
+      element.addEventListener('MODAL_OPEN', function () {
+        send({
+          action: 'open',
+          category: 'govuk-modal',
+          label: element.id
+        });
+      });
+    });
   } // trackEvent(
   //     window.document.querySelectorAll('[data-module*="govuk-details"]'),
   //     'click',

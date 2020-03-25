@@ -303,13 +303,13 @@ const html = `<!DOCTYPE html>
   </div>
 </footer>
 
-<div class="govuk-modal" id="govuk-modal-session-timeout" data-module="govuk-modal">
+<div class="govuk-modal" id="govuk-modal-session-timing-out" data-module="govuk-modal">
     <div class="govuk-modal__wrapper">
         <dialog
-            id="session-timeout"
+            id="session-timing-out"
             class="govuk-modal__box"
-            aria-labelledby="session-timeout-title"
-            aria-describedby="session-timeout-content"
+            aria-labelledby="session-timing-out-title"
+            aria-describedby="session-timing-out-content"
             aria-modal="true"
             role="alertdialog"
             tabindex="0"
@@ -340,7 +340,7 @@ const html = `<!DOCTYPE html>
             </div>
             <div class="govuk-modal__main">
                 
-                    <span class="govuk-modal__heading govuk-heading-l" id="session-timeout-title">
+                    <span class="govuk-modal__heading govuk-heading-l" id="session-timing-out-title">
                         
                             
     <span aria-live="assertive">Your application will time out in <span class="govuk-modal__time-remaining" aria-atomic="true" aria-live="assertive"></span></span>
@@ -349,7 +349,7 @@ const html = `<!DOCTYPE html>
                     </span>
                 
                 
-                    <div class="govuk-modal__content" id="session-timeout-content">
+                    <div class="govuk-modal__content" id="session-timing-out-content">
                         
                             
     <p class="govuk-body">We'll reset your application if you do not respond. We do this to keep your information secure.</p>

@@ -27,7 +27,7 @@ import createTimeoutModal from '../modules/modal-timeout';
 
     if (pathName.startsWith('/apply')) {
         const sessionTimeoutModalElement = window.document.querySelector(
-            '#govuk-modal-session-timeout'
+            '#govuk-modal-session-timing-out'
         );
         sessionTimeoutModalElement.addEventListener('TIMED_OUT', () => {
             const timeoutEndedModal = createTimeoutModal(window);
@@ -40,7 +40,7 @@ import createTimeoutModal from '../modules/modal-timeout';
 
         const timeoutModal = createTimeoutModal(window);
         timeoutModal.init({
-            element: '#govuk-modal-session-timeout',
+            element: '#govuk-modal-session-timing-out',
             resumeElement: '.govuk-modal__continue',
             showIn: [
                 // show a modal at two-thirds, and fourteen-fifteenths of the session

@@ -3,38 +3,20 @@ import guaTrackLinks from './vendor/gua-anchor';
 import debounce from '../../../node_modules/debounce';
 
 function createCicaGa(window) {
-    // function trackEvent(elements, eventType, eventHandler) {
-    //     elements.forEach(element => {
-    //         element.addEventListener(
-    //             eventType,
-    //             () => {
-    //                 console.log({
-    //                     element,
-    //                     eventType,
-    //                     YEAH: eventHandler.toString()
-    //                 });
-    //                 eventHandler(element);
-    //             },
-    //             false
-    //         );
-    //     });
-    // }
-
-    // https://developers.google.com/analytics/devguides/collection/gtagjs/events
-    // gtag('event', <action>, {
-    //     'event_category': <category>,
-    //     'event_label': <label>,
-    //     'value': <value>
-    // });
-    const defaultOptions = {
-        type: 'event', // <String>
-        action: 'click', // <String>
-        category: 'category', // <String>
-        label: undefined, // <String>
-        value: undefined // non-negative <Integer>
-    };
-
     function send(options) {
+        // https://developers.google.com/analytics/devguides/collection/gtagjs/events
+        // gtag('event', <action>, {
+        //     'event_category': <category>,
+        //     'event_label': <label>,
+        //     'value': <value>
+        // });
+        const defaultOptions = {
+            type: 'event', // <String>
+            action: 'click', // <String>
+            category: 'category', // <String>
+            label: undefined, // <String>
+            value: undefined // non-negative <Integer>
+        };
         // eslint-disable-next-line prefer-object-spread
         const gtagOptions = Object.assign({}, defaultOptions, options);
         window.gtag(gtagOptions.type, gtagOptions.action, {
@@ -65,7 +47,7 @@ function createCicaGa(window) {
                         .innerText;
                     send({
                         action: 'open',
-                        category: 'details-tag',
+                        category: 'govuk-details',
                         label: detailsTagText
                     });
                 }
@@ -109,6 +91,20 @@ function createCicaGa(window) {
             }, 100),
             false
         );
+    }
+
+    const modalElements = window.document.querySelectorAll('[data-module*="govuk-modal"]');
+
+    if (modalElements.length) {
+        modalElements.forEach(element => {
+            element.addEventListener('MODAL_OPEN', () => {
+                send({
+                    action: 'open',
+                    category: 'govuk-modal',
+                    label: element.id
+                });
+            });
+        });
     }
 
     // trackEvent(

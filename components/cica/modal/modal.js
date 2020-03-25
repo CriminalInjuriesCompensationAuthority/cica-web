@@ -82,6 +82,9 @@ Modal.prototype.handleOpen = function(e) {
     if (typeof this.options.onOpen === 'function') {
         this.options.onOpen.call(this);
     }
+
+    const event = new CustomEvent('MODAL_OPEN');
+    this.module.dispatchEvent(event);
 };
 
 Modal.prototype.handleClose = function(e) {
@@ -104,6 +107,9 @@ Modal.prototype.handleClose = function(e) {
     if (typeof this.options.onClose === 'function') {
         this.options.onClose.call(this);
     }
+
+    const event = new CustomEvent('MODAL_CLOSE');
+    this.module.dispatchEvent(event);
 };
 
 Modal.prototype.handleFocus = function() {
