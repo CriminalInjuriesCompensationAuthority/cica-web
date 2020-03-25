@@ -498,6 +498,13 @@ module.exports = {
                                 itemValue: 'text',
                                 componentIds: ['q-applicant-enter-your-telephone-number']
                             }
+                        ],
+                        additionalMapping: [
+                            {
+                                itemType: 'divider',
+                                itemValue: 'or',
+                                itemIndex: 2
+                            }
                         ]
                     }
                 },
