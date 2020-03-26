@@ -119,8 +119,7 @@ jobs:
             | kubectl apply -f -
             kubectl apply \
                 -f kube_deploy/Stg/service.yml \
-                -f kube_deploy/Stg/ingress.yml \
-                -f kube_deploy/Stg/cert.yml
+                -f kube_deploy/Stg/ingress.yml
   deploy_to_uat:
     executor: docker-publisher
     steps:
