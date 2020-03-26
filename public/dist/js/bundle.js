@@ -95,7 +95,7 @@
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var core_js_modules_es_symbol__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! core-js/modules/es.symbol */ "./node_modules/core-js/modules/es.symbol.js");
+/* WEBPACK VAR INJECTION */(function(module) {/* harmony import */ var core_js_modules_es_symbol__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! core-js/modules/es.symbol */ "./node_modules/core-js/modules/es.symbol.js");
 /* harmony import */ var core_js_modules_es_symbol__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_symbol__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var core_js_modules_es_symbol_description__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! core-js/modules/es.symbol.description */ "./node_modules/core-js/modules/es.symbol.description.js");
 /* harmony import */ var core_js_modules_es_symbol_description__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_symbol_description__WEBPACK_IMPORTED_MODULE_1__);
@@ -309,7 +309,8 @@ Modal.prototype.destroy = function (callback) {
   callback && callback();
 };
 
-window.GOVUKFrontend.Modal = Modal;
+module.exports = Modal;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../../node_modules/webpack/buildin/harmony-module.js */ "./node_modules/webpack/buildin/harmony-module.js")(module)))
 
 /***/ }),
 
@@ -5795,6 +5796,41 @@ module.exports = g;
 
 /***/ }),
 
+/***/ "./node_modules/webpack/buildin/harmony-module.js":
+/*!*******************************************!*\
+  !*** (webpack)/buildin/harmony-module.js ***!
+  \*******************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = function(originalModule) {
+	if (!originalModule.webpackPolyfill) {
+		var module = Object.create(originalModule);
+		// module.parent = undefined by default
+		if (!module.children) module.children = [];
+		Object.defineProperty(module, "loaded", {
+			enumerable: true,
+			get: function() {
+				return module.l;
+			}
+		});
+		Object.defineProperty(module, "id", {
+			enumerable: true,
+			get: function() {
+				return module.i;
+			}
+		});
+		Object.defineProperty(module, "exports", {
+			enumerable: true
+		});
+		module.webpackPolyfill = 1;
+	}
+	return module;
+};
+
+
+/***/ }),
+
 /***/ "./src/js/scripts.js":
 /*!***************************!*\
   !*** ./src/js/scripts.js ***!
@@ -6403,6 +6439,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! core-js/modules/web.dom-collections.for-each */ "./node_modules/core-js/modules/web.dom-collections.for-each.js");
 /* harmony import */ var core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_6__);
 /* harmony import */ var _ajax_request__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../ajax-request */ "./src/modules/ajax-request/index.js");
+/* harmony import */ var _components_cica_modal_modal__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../../components/cica/modal/modal */ "./components/cica/modal/modal.js");
 
 
 
@@ -6412,6 +6449,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /* global SESSION_DURATION, CustomEvent */
+
  // source: https://developer.mozilla.org/en-US/docs/Web/API/CustomEvent/CustomEvent
 // eslint-disable-next-line consistent-return
 
@@ -6471,7 +6509,6 @@ function createTimeoutModal(window) {
   }
 
   function updateTimeRemainingText(el, timeRemaining, interval, dialogBox) {
-    console.log(timeoutsArray, timeoutsArray.length, interval, timeRemaining, timeRemaining >= interval);
     var element = el;
     element.innerHTML = convertSecondsToMinutesAndSeconds(timeRemaining);
     window.clearTimeout(timeoutsArray.pop()); // remove last item in the array as it has done its job.
@@ -6493,7 +6530,6 @@ function createTimeoutModal(window) {
     new _ajax_request__WEBPACK_IMPORTED_MODULE_7__["default"]('/', 'GET').then(function () {
       settings.dialogBoxResumeCTA.removeEventListener('click', resumeClickHandler);
       timeoutsArray.forEach(function (x) {
-        console.log(x);
         window.clearTimeout(x);
       });
       timeoutsArray = [];
@@ -6512,13 +6548,12 @@ function createTimeoutModal(window) {
   }
 
   function setUpModal(settings) {
-    modal = new window.GOVUKFrontend.Modal(settings.dialogBox).init(settings.modalOptions);
+    modal = new _components_cica_modal_modal__WEBPACK_IMPORTED_MODULE_8__["default"](settings.dialogBox).init(settings.modalOptions);
     settings.dialogBox.addEventListener('TIMED_OUT', function () {
       modal.close();
     });
     var timeRemainingElements = settings.dialogBox.querySelectorAll('.govuk-modal__time-remaining');
     timeRemainingElements.forEach(function (el) {
-      console.log('here 1');
       updateTimeRemainingText(el, 15000, 1000, settings.dialogBox);
     });
 

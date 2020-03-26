@@ -191,4 +191,4 @@ Modal.prototype.destroy = function(callback) {
     callback && callback();
 }
 
-window.GOVUKFrontend.Modal = Modal;
+module.exports = Modal;

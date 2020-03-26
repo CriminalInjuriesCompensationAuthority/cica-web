@@ -1,5 +1,6 @@
 /* global SESSION_DURATION, CustomEvent */
 import AjaxRequest from '../ajax-request';
+import Modal from '../../../components/cica/modal/modal';
 
 // source: https://developer.mozilla.org/en-US/docs/Web/API/CustomEvent/CustomEvent
 // eslint-disable-next-line consistent-return
@@ -100,7 +101,7 @@ function createTimeoutModal(window) {
     }
 
     function setUpModal(settings) {
-        modal = new window.GOVUKFrontend.Modal(settings.dialogBox).init(settings.modalOptions);
+        modal = new Modal(settings.dialogBox).init(settings.modalOptions);
 
         settings.dialogBox.addEventListener('TIMED_OUT', () => {
             modal.close();
