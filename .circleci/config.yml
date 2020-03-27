@@ -1,8 +1,10 @@
 # Javascript Node CircleCI 2.0 configuration file
 #
 # Check https://circleci.com/docs/2.0/language-javascript/ for more details
-# no Comment 
+# no Comment
 version: 2.1
+orbs:
+  snyk: snyk/snyk@0.0.8
 executors:
   docker-publisher:
     environment:
@@ -19,6 +21,7 @@ jobs:
       - checkout
       - run: npm install
       - run: npm test
+      - snyk/scan
   build:
     executor: docker-publisher
     steps:
@@ -162,8 +165,8 @@ jobs:
                 -f kube_deploy/Production/cert.yml
 workflows:
   version: 2
-  build-test-push-deploystg-deploydev-deploytouatapproval-deployuat-deploytoprodapproval-deployprod:
-    jobs:
+  ? build-test-push-deploystg-deploydev-deploytouatapproval-deployuat-deploytoprodapproval-deployprod
+  : jobs:
       - build-and-test
       - build:
           requires:
