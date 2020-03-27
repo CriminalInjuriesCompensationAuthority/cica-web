@@ -18,16 +18,6 @@ function createAutocomplete(window) {
         return templateString;
     }
 
-    function onConfirm(result) {
-        const element = window.document.querySelector('.govuk-select');
-        if (result) {
-            const valueToSelect = result.code;
-            element.value = valueToSelect;
-        } else {
-            element.value = '';
-        }
-    }
-
     function htmlCollectionToArray(ddElement) {
         // Turn the array-like html collection into an array
         return [...ddElement.options];
@@ -41,6 +31,18 @@ function createAutocomplete(window) {
             code: option.value,
             name: option.innerHTML
         }));
+    }
+
+    function filterResults(query, results) {
+        return query
+            ? results.filter(result => {
+                  // Make the user unable to search for and select the place holder.
+                  if (result.code === '') {
+                      return false;
+                  }
+                  return result.name.toLowerCase().indexOf(query.toLowerCase()) !== -1;
+              })
+            : [];
     }
 
     /**
@@ -72,26 +74,16 @@ function createAutocomplete(window) {
                     confirmOnBlur: false,
                     showAllValues: true,
                     displayMenu: 'overlay',
-                    onConfirm,
+                    onConfirm: result => {
+                        const element = window.document.querySelector('.govuk-select');
+                        element.value = result ? result.code : '';
+                    },
                     // eslint-disable-next-line no-loop-func
                     source: (query, syncResults) => {
                         const resultsArray = htmlCollectionToArray(selectElements[i]);
                         const results = formatResults(resultsArray);
 
-                        syncResults(
-                            query
-                                ? results.filter(result => {
-                                      // Make the user unable to search for and select the place holder.
-                                      if (result.code === '') {
-                                          return false;
-                                      }
-                                      return (
-                                          result.name.toLowerCase().indexOf(query.toLowerCase()) !==
-                                          -1
-                                      );
-                                  })
-                                : []
-                        );
+                        syncResults(filterResults(query, results));
                     },
                     templates: {
                         inputValue: inputValueTemplate,
@@ -105,9 +97,9 @@ function createAutocomplete(window) {
     return Object.freeze({
         inputValueTemplate,
         suggestionTemplate,
-        onConfirm,
         htmlCollectionToArray,
         formatResults,
+        filterResults,
         init
     });
 }
