@@ -130,6 +130,7 @@ describe('Timeout Modal', () => {
     });
 
     it('should resume a modal counting down when CTA is clicked', async () => {
+        jest.doMock('../ajax-request', () => Promise.resolve('200 response'));
         document.body.innerHTML = `<div class="govuk-modal" id="govuk-modal-test-3" data-module="govuk-modal">
             <div class="govuk-modal__wrapper">
                 <dialog
@@ -158,6 +159,7 @@ describe('Timeout Modal', () => {
             </div>
             <div class="govuk-modal__overlay"></div>
         </div>`;
+
         const timeoutEndedModal = createTimeoutModal(window);
         timeoutEndedModal.init({
             element: '#govuk-modal-test-3',
@@ -170,8 +172,52 @@ describe('Timeout Modal', () => {
         await new Promise(r => setTimeout(r, 1000));
         // click resume button.
         document.querySelector('.govuk-modal__continue').click();
+        // emulate a delay.
+        await new Promise(r => setTimeout(r, 500));
         expect(document.querySelector('.govuk-modal__time-remaining').innerHTML).toEqual(
             '3 seconds'
         );
+    });
+
+    it('should show throw error when unable to refresh session', async () => {
+        // emulate a 404 for the session refresh attempt.
+        jest.doMock('../ajax-request', () => Promise.reject(new Error('error')));
+        document.body.innerHTML = `<div class="govuk-modal" id="govuk-modal-test-3" data-module="govuk-modal">
+            <div class="govuk-modal__wrapper">
+                <dialog
+                    id="test-3"
+                    class="govuk-modal__box"
+                    aria-labelledby="test-3-title"
+                    aria-describedby="test-3-content"
+                    aria-modal="true"
+                    role="alertdialog"
+                    tabindex="0"
+                >
+                    <div class="govuk-modal__header">
+                        header
+                    </div>
+                    <div class="govuk-modal__main">
+                        <span class="govuk-modal__heading govuk-heading-l" id="test-3-title">Test 1 heading</span>
+                        <div class="govuk-modal__content" id="test-3-content">
+                            <p class="govuk-body">Test 3 modal body text</p>
+                            <span aria-live="assertive">Your application will time out in <span class="govuk-modal__time-remaining" aria-atomic="true" aria-live="assertive"></span></span>
+                        </div>
+                        <button type="button" class="govuk-button govuk-modal__continue" data-module="govuk-button">
+                            Continue application
+                        </button>
+                    </div>
+                </dialog>
+            </div>
+            <div class="govuk-modal__overlay"></div>
+        </div>`;
+        document.dispatchEvent = jest.fn();
+        const timeoutEndedModal = createTimeoutModal(window);
+        timeoutEndedModal.init({
+            element: '#govuk-modal-test-3',
+            resumeElement: '.govuk-modal__continue'
+        });
+        // click resume button.
+        document.querySelector('.govuk-modal__continue').click();
+        expect(document.dispatchEvent).toHaveBeenCalled();
     });
 });

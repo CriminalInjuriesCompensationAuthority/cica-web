@@ -191,4 +191,4 @@ Modal.prototype.destroy = function(callback) {
     callback && callback();
 }
 
-module.exports = Modal;
+export default Modal;
