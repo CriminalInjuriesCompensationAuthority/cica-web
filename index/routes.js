@@ -1,6 +1,7 @@
 'use strict';
 
 const express = require('express');
+const createHealthCheckService = require('../services/health-check');
 
 const router = express.Router();
 
@@ -30,6 +31,11 @@ router.get('/new-claim', (req, res) => {
 
 router.get('/police-forces', (req, res) => {
     res.render('police-forces.njk');
+});
+
+router.get('/hc', (req, res) => {
+    const healthCheckService = createHealthCheckService();
+    res.json(healthCheckService.getHealth());
 });
 
 router.get('*', (req, res) => {
