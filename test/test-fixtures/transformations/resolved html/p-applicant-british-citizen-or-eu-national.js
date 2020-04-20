@@ -495,6 +495,9 @@ window.CICA = {
                         height="32">
                     </image>
                 </svg>
+                <button type="button" class="govuk-button govuk-modal__close" data-module="govuk-button" aria-label="Close modal">
+                ×
+                </button>
                 
             </div>
             <div class="govuk-modal__main">

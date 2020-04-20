@@ -61,6 +61,8 @@ The `content` parameter contains the following properties:
 ## Usage
 
 ```js
+import createTimeoutModal from '../modules/modal-timeout';
+
 const modalElement = document.querySelector('#myModal');
 const modalOptions = {
     triggerElement: document.querySelector('#someElement'),
@@ -76,5 +78,6 @@ const modalOptions = {
         console.log('modal closed!!');
     })
 };
-const modal = new window.GOVUKFrontend.Modal(modalElement).init(modalOption);
+const modal = createTimeoutModal(window);
+timeoutEndedModal.init(modalOption);
 ```

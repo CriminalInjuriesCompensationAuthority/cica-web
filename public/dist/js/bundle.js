@@ -118,16 +118,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var core_js_modules_web_dom_collections_iterator__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! core-js/modules/web.dom-collections.iterator */ "./node_modules/core-js/modules/web.dom-collections.iterator.js");
 /* harmony import */ var core_js_modules_web_dom_collections_iterator__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_web_dom_collections_iterator__WEBPACK_IMPORTED_MODULE_10__);
 /* eslint-disable */
- // // Workaround for missing NodeList.forEach in legacy browsers
-// // https://github.com/alphagov/govuk-frontend/blob/master/src/govuk/common.js#L6
-// function nodeListForEach(nodes, callback) {
-//     if (window.NodeList.prototype.forEach) {
-//         return nodes.forEach(callback);
-//     }
-//     for (let i = 0; i < nodes.length; i++) {
-//         callback.call(window, nodes[i], i, nodes);
-//     }
-// }
+
 
 
 
@@ -285,28 +276,6 @@ Modal.prototype.handleContent = function (options) {
   var dialogContent = this.dialogBox.querySelector('.govuk-modal__content');
   dialogTitle.innerHTML = options.heading;
   dialogContent.innerHTML = options.content;
-};
-
-Modal.prototype.destroy = function (callback) {
-  this.open = undefined;
-  this.close = undefined;
-  this.focus = undefined;
-  this.boundKeyDown = undefined;
-  this.content = undefined;
-  this.focusable = undefined;
-  this.focusableLast = undefined;
-  this.focusElement = undefined;
-  this.dialogContent = undefined;
-  this.buttonClose = undefined;
-  this.isOpen = undefined;
-  this.options = undefined;
-  this.lastActiveElement = undefined;
-  this.container = undefined;
-  this.module = undefined;
-  this.hasNativeDialog = undefined;
-  this.dialogBox = undefined;
-  this.focusElement = undefined;
-  callback && callback();
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (Modal);
@@ -5894,7 +5863,7 @@ function AjaxRequest(url, method) {
   }).join('&');
 
   if (!this.url) {
-    throw new Error('NO URL specified. AJAX Request impossible.');
+    throw new Error('No URL specified. AJAX Request impossible.');
   }
 
   var request = new XMLHttpRequest(); // https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/send
@@ -5910,7 +5879,7 @@ function AjaxRequest(url, method) {
       if (request.status >= 200 && request.status < 400) {
         resolve(request.responseText);
       } else {
-        reject(new Error('We reached our target URL, but it returned an error'));
+        reject(new Error('The target resource returned an error'));
       }
     };
 
@@ -6503,7 +6472,9 @@ function createTimeoutModal(window) {
         dialogBox: settings.dialogBox,
         modalOptions: settings.modalOptions,
         showIn: settings.showIn,
-        dialogBoxResumeCTA: settings.dialogBoxResumeCTA
+        closed: settings.closed,
+        dialogBoxResumeCTA: settings.dialogBoxResumeCTA,
+        onTimeout: settings.onTimeout
       });
     }).catch(function () {
       var event = new CustomEvent('MODAL_ERROR_RESUME_FAILURE');
@@ -6537,6 +6508,8 @@ function createTimeoutModal(window) {
           }
         });
       }
+    } else if (settings.closed) {
+      modal.close();
     } else {
       modal.open();
     }
@@ -6553,10 +6526,15 @@ function createTimeoutModal(window) {
         modalOptions.focusElement = dialogBoxResumeCTA;
       }
 
+      modalOptions.content = options.content;
+      modalOptions.triggerElement = window.document.querySelector(options.triggerElement);
+      modalOptions.onOpen = options.onOpen;
+      modalOptions.onClose = options.onClose;
       setUpModal({
         dialogBox: dialogBox,
         modalOptions: modalOptions,
         showIn: options.showIn,
+        closed: options.closed,
         dialogBoxResumeCTA: dialogBoxResumeCTA,
         onTimeout: options.onTimeout
       });

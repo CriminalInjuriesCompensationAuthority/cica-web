@@ -10,7 +10,7 @@ function AjaxRequest(url, method, data = {}) {
                   .join('&');
 
     if (!this.url) {
-        throw new Error('NO URL specified. AJAX Request impossible.');
+        throw new Error('No URL specified. AJAX Request impossible.');
     }
     const request = new XMLHttpRequest();
     // https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/send
@@ -25,7 +25,7 @@ function AjaxRequest(url, method, data = {}) {
             if (request.status >= 200 && request.status < 400) {
                 resolve(request.responseText);
             } else {
-                reject(new Error('We reached our target URL, but it returned an error'));
+                reject(new Error('The target resource returned an error'));
             }
         };
 

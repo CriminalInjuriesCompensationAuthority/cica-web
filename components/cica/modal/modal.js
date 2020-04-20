@@ -1,17 +1,6 @@
 /* eslint-disable */
 'use strict';
 
-// // Workaround for missing NodeList.forEach in legacy browsers
-// // https://github.com/alphagov/govuk-frontend/blob/master/src/govuk/common.js#L6
-// function nodeListForEach(nodes, callback) {
-//     if (window.NodeList.prototype.forEach) {
-//         return nodes.forEach(callback);
-//     }
-//     for (let i = 0; i < nodes.length; i++) {
-//         callback.call(window, nodes[i], i, nodes);
-//     }
-// }
-
 function Modal(module) {
     this.module = module;
     this.dialogBox = module.querySelector('dialog');
@@ -164,31 +153,6 @@ Modal.prototype.handleContent = function(options) {
     const dialogContent = this.dialogBox.querySelector('.govuk-modal__content');
     dialogTitle.innerHTML = options.heading;
     dialogContent.innerHTML = options.content;
-}
-
-Modal.prototype.destroy = function(callback) {
-    this.open = undefined;
-    this.close = undefined;
-    this.focus = undefined;
-    this.boundKeyDown = undefined;
-    this.content = undefined;
-
-    this.focusable = undefined;
-    this.focusableLast = undefined;
-    this.focusElement = undefined;
-    this.dialogContent = undefined;
-    this.buttonClose = undefined;
-    this.isOpen = undefined;
-    this.options = undefined;
-
-    this.lastActiveElement = undefined;
-    this.container = undefined;
-    this.module = undefined;
-    this.hasNativeDialog = undefined;
-    this.dialogBox = undefined;
-    this.focusElement = undefined;
-
-    callback && callback();
 }
 
 export default Modal;

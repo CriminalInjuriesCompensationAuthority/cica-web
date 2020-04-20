@@ -91,7 +91,9 @@ function createTimeoutModal(window) {
                     dialogBox: settings.dialogBox,
                     modalOptions: settings.modalOptions,
                     showIn: settings.showIn,
-                    dialogBoxResumeCTA: settings.dialogBoxResumeCTA
+                    closed: settings.closed,
+                    dialogBoxResumeCTA: settings.dialogBoxResumeCTA,
+                    onTimeout: settings.onTimeout
                 });
             })
             .catch(() => {
@@ -131,6 +133,8 @@ function createTimeoutModal(window) {
                     }
                 });
             }
+        } else if (settings.closed) {
+            modal.close();
         } else {
             modal.open();
         }
@@ -146,10 +150,16 @@ function createTimeoutModal(window) {
                 modalOptions.focusElement = dialogBoxResumeCTA;
             }
 
+            modalOptions.content = options.content;
+            modalOptions.triggerElement = window.document.querySelector(options.triggerElement);
+            modalOptions.onOpen = options.onOpen;
+            modalOptions.onClose = options.onClose;
+
             setUpModal({
                 dialogBox,
                 modalOptions,
                 showIn: options.showIn,
+                closed: options.closed,
                 dialogBoxResumeCTA,
                 onTimeout: options.onTimeout
             });

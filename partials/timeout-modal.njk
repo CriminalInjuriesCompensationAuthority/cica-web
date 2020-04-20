@@ -21,7 +21,7 @@
 {% call govukModal({
     id: "session-timing-out",
     role: "alertdialog",
-    hasCloseButton: "false",
+    hasCloseButton: false,
     heading: {
         html: sessionTimeoutHeading
     },
@@ -40,7 +40,7 @@
 {% call govukModal({
     id: "session-ended",
     role: "alertdialog",
-    hasCloseButton: "false",
+    hasCloseButton: false,
     heading: {
         html: sessionEndedHeading
     },
@@ -58,7 +58,7 @@
 {% call govukModal({
     id: "session-resume-error",
     role: "alertdialog",
-    hasCloseButton: "true",
+    hasCloseButton: true,
     heading: {
         html: sessionResumeErrorHeading
     },
