@@ -104,7 +104,7 @@ function createCicaGa(window) {
 
     const modalElements = window.document.querySelectorAll('[data-module*="govuk-modal"]');
 
-    if (modalElements.length) {
+    if (modalElements) {
         modalElements.forEach(element => {
             element.addEventListener('MODAL_OPEN', () => {
                 send({
@@ -113,6 +113,16 @@ function createCicaGa(window) {
                     label: element.id
                 });
             });
+            const continueButtonElement = element.querySelector('.govuk-modal__continue');
+            if (continueButtonElement) {
+                continueButtonElement.addEventListener('click', () => {
+                    send({
+                        action: 'dismiss',
+                        category: 'govuk-modal',
+                        label: element.id
+                    });
+                });
+            }
         });
     }
 

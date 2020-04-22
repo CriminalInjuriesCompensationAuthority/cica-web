@@ -142,28 +142,28 @@ function createTimeoutModal(window) {
 
     function init(options) {
         const dialogBox = window.document.querySelector(options.element);
-        const dialogBoxResumeCTA = dialogBox.querySelector(options.resumeElement);
-
-        if (dialogBox) {
-            const modalOptions = {};
-            if (dialogBoxResumeCTA) {
-                modalOptions.focusElement = dialogBoxResumeCTA;
-            }
-
-            modalOptions.content = options.content;
-            modalOptions.triggerElement = window.document.querySelector(options.triggerElement);
-            modalOptions.onOpen = options.onOpen;
-            modalOptions.onClose = options.onClose;
-
-            setUpModal({
-                dialogBox,
-                modalOptions,
-                showIn: options.showIn,
-                closed: options.closed,
-                dialogBoxResumeCTA,
-                onTimeout: options.onTimeout
-            });
+        if (!dialogBox) {
+            return;
         }
+        const dialogBoxResumeCTA = dialogBox.querySelector(options.resumeElement);
+        const modalOptions = {};
+        if (dialogBoxResumeCTA) {
+            modalOptions.focusElement = dialogBoxResumeCTA;
+        }
+
+        modalOptions.content = options.content;
+        modalOptions.triggerElement = window.document.querySelector(options.triggerElement);
+        modalOptions.onOpen = options.onOpen;
+        modalOptions.onClose = options.onClose;
+
+        setUpModal({
+            dialogBox,
+            modalOptions,
+            showIn: options.showIn,
+            closed: options.closed,
+            dialogBoxResumeCTA,
+            onTimeout: options.onTimeout
+        });
     }
 
     return Object.freeze({

@@ -6327,7 +6327,7 @@ function createCicaGa(window) {
 
   var modalElements = window.document.querySelectorAll('[data-module*="govuk-modal"]');
 
-  if (modalElements.length) {
+  if (modalElements) {
     modalElements.forEach(function (element) {
       element.addEventListener('MODAL_OPEN', function () {
         send({
@@ -6336,6 +6336,17 @@ function createCicaGa(window) {
           label: element.id
         });
       });
+      var continueButtonElement = element.querySelector('.govuk-modal__continue');
+
+      if (continueButtonElement) {
+        continueButtonElement.addEventListener('click', function () {
+          send({
+            action: 'dismiss',
+            category: 'govuk-modal',
+            label: element.id
+          });
+        });
+      }
     });
   }
 
@@ -6517,28 +6528,30 @@ function createTimeoutModal(window) {
 
   function init(options) {
     var dialogBox = window.document.querySelector(options.element);
-    var dialogBoxResumeCTA = dialogBox.querySelector(options.resumeElement);
 
-    if (dialogBox) {
-      var modalOptions = {};
-
-      if (dialogBoxResumeCTA) {
-        modalOptions.focusElement = dialogBoxResumeCTA;
-      }
-
-      modalOptions.content = options.content;
-      modalOptions.triggerElement = window.document.querySelector(options.triggerElement);
-      modalOptions.onOpen = options.onOpen;
-      modalOptions.onClose = options.onClose;
-      setUpModal({
-        dialogBox: dialogBox,
-        modalOptions: modalOptions,
-        showIn: options.showIn,
-        closed: options.closed,
-        dialogBoxResumeCTA: dialogBoxResumeCTA,
-        onTimeout: options.onTimeout
-      });
+    if (!dialogBox) {
+      return;
     }
+
+    var dialogBoxResumeCTA = dialogBox.querySelector(options.resumeElement);
+    var modalOptions = {};
+
+    if (dialogBoxResumeCTA) {
+      modalOptions.focusElement = dialogBoxResumeCTA;
+    }
+
+    modalOptions.content = options.content;
+    modalOptions.triggerElement = window.document.querySelector(options.triggerElement);
+    modalOptions.onOpen = options.onOpen;
+    modalOptions.onClose = options.onClose;
+    setUpModal({
+      dialogBox: dialogBox,
+      modalOptions: modalOptions,
+      showIn: options.showIn,
+      closed: options.closed,
+      dialogBoxResumeCTA: dialogBoxResumeCTA,
+      onTimeout: options.onTimeout
+    });
   }
 
   return Object.freeze({
