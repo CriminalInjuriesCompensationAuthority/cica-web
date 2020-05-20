@@ -6,9 +6,13 @@ import createTimeoutModal from './index';
 window.HTMLElement.prototype.scrollIntoView = jest.fn();
 window.SESSION_DURATION = 3000;
 
-jest.mock('../ajax-request/index', () => {
-    return jest.fn().mockImplementation(() => {
-        return Promise.resolve('200 response');
+jest.mock('../../../node_modules/ajax-request/index', () => {
+    return jest.fn().mockImplementation((url, cb) => {
+        cb({
+            err: 'some error',
+            body: null,
+            res: null
+        });
     });
 });
 describe('Timeout Modal', () => {

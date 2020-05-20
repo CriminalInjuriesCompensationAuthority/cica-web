@@ -7,9 +7,13 @@ window.HTMLElement.prototype.scrollIntoView = jest.fn();
 window.SESSION_DURATION = 3000;
 
 // emulate a 404 for the session refresh attempt.
-jest.mock('../ajax-request/index', () => {
-    return jest.fn().mockImplementation(() => {
-        return Promise.reject(new Error('The target resource returned an error'));
+jest.mock('../../../node_modules/ajax-request/index', () => {
+    return jest.fn().mockImplementation((url, cb) => {
+        cb({
+            err: 'some error',
+            body: null,
+            res: null
+        });
     });
 });
 

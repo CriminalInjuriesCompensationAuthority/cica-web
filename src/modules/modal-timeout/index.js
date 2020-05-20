@@ -1,25 +1,8 @@
-/* global SESSION_DURATION, CustomEvent */
-import AjaxRequest from '../ajax-request';
+/* global SESSION_DURATION */
+import AjaxRequest from '../../../node_modules/ajax-request';
 import Modal from '../../../components/cica/modal/modal';
-
-// source: https://developer.mozilla.org/en-US/docs/Web/API/CustomEvent/CustomEvent
-// eslint-disable-next-line consistent-return
-(() => {
-    if (typeof window.CustomEvent === 'function') {
-        return false;
-    }
-
-    function CustomEvent(event, params) {
-        // eslint-disable-next-line no-param-reassign
-        params = params || {bubbles: false, cancelable: false, detail: undefined};
-        const evt = window.document.createEvent('CustomEvent');
-        evt.initCustomEvent(event, params.bubbles, params.cancelable, params.detail);
-        return evt;
-    }
-
-    CustomEvent.prototype = window.Event.prototype;
-    window.CustomEvent = CustomEvent;
-})();
+import CustomEvent from '../../../node_modules/custom-event';
+import {ms, s, m} from '../../../node_modules/time-convert';
 
 function createTimeoutModal(window) {
     // We need to clear the timeouts when an application is resumed. This is
@@ -32,14 +15,13 @@ function createTimeoutModal(window) {
     let timeoutsArray = [];
     let modal;
 
-    function convertSecondsToMinutesAndSeconds(duration) {
-        const durationInSeconds = Math.floor(duration / 1000);
-        const minutes = Number.parseInt(durationInSeconds / 60, 10);
-        const seconds = durationInSeconds % 60;
+    function msToMinutesAndSeconds(duration) {
+        const result = ms.to(m, s)(duration);
+        const minutes = result[0];
+        const seconds = result[1];
         let minutesText = '';
         let secondsText = '';
         let conjunctionText = '';
-
         if (minutes) {
             minutesText = minutes === 1 ? `${minutes} minute` : `${minutes} minutes`;
         }
@@ -54,7 +36,7 @@ function createTimeoutModal(window) {
 
     function updateTimeRemainingText(el, timeRemaining, interval, dialogBox) {
         const element = el;
-        element.innerHTML = convertSecondsToMinutesAndSeconds(timeRemaining);
+        element.innerHTML = msToMinutesAndSeconds(timeRemaining);
 
         window.clearTimeout(timeoutsArray.pop()); // remove last item in the array as it has done its job.
         const newTimeRemaining = Math.round((timeRemaining - interval) / interval) * interval;
@@ -78,28 +60,29 @@ function createTimeoutModal(window) {
     }
 
     function resumeClickHandler(settings) {
-        new AjaxRequest('/', 'GET')
-            .then(() => {
-                settings.dialogBoxResumeCTA.removeEventListener('click', resumeClickHandler);
-                timeoutsArray.forEach(x => {
-                    window.clearTimeout(x);
-                });
-                timeoutsArray = [];
-                modal.close();
-                // eslint-disable-next-line no-use-before-define
-                setUpModal({
-                    dialogBox: settings.dialogBox,
-                    modalOptions: settings.modalOptions,
-                    showIn: settings.showIn,
-                    closed: settings.closed,
-                    dialogBoxResumeCTA: settings.dialogBoxResumeCTA,
-                    onTimeout: settings.onTimeout
-                });
-            })
-            .catch(() => {
+        // get a valid html response - this will go to our custom 404 page.
+        AjaxRequest('/something', err => {
+            if (err) {
                 const event = new CustomEvent('MODAL_ERROR_RESUME_FAILURE');
                 settings.dialogBox.dispatchEvent(event);
+            }
+
+            settings.dialogBoxResumeCTA.removeEventListener('click', resumeClickHandler);
+            timeoutsArray.forEach(x => {
+                window.clearTimeout(x);
             });
+            timeoutsArray = [];
+            modal.close();
+            // eslint-disable-next-line no-use-before-define
+            setUpModal({
+                dialogBox: settings.dialogBox,
+                modalOptions: settings.modalOptions,
+                showIn: settings.showIn,
+                closed: settings.closed,
+                dialogBoxResumeCTA: settings.dialogBoxResumeCTA,
+                onTimeout: settings.onTimeout
+            });
+        });
     }
 
     function setUpModal(settings) {

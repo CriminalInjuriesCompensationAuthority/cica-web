@@ -4465,8 +4465,7 @@
 @media print {
   .cookie-banner {
     display: none !important; } }
-.govuk-modal-dialogue,
-.govuk-modal-dialogue__backdrop {
+
 .govuk-modal,
 .govuk-modal__overlay {
   position: fixed;
