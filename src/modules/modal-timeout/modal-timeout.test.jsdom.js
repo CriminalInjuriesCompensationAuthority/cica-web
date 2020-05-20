@@ -4,7 +4,11 @@ import createTimeoutModal from './index';
 // https://stackoverflow.com/questions/53271193/typeerror-scrollintoview-is-not-a-function
 // https://github.com/jsdom/jsdom/issues/1695
 window.HTMLElement.prototype.scrollIntoView = jest.fn();
-window.SESSION_DURATION = 3000;
+window.CICA = {
+    SERVICE_URL: 'CW_URL',
+    ANALYTICS_TRACKING_ID: 'CW_GA_TRACKING_ID',
+    SESSION_DURATION: 3000
+};
 
 jest.mock('../../../node_modules/ajax-request/index', () => {
     return jest.fn().mockImplementation((url, cb) => {

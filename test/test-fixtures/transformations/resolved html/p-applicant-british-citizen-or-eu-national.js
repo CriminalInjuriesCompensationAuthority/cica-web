@@ -35,6 +35,8 @@ const html = `<!DOCTYPE html>
     <script src="/html5-shiv/html5shiv.js"></script>
   <![endif]-->
 
+  <link rel="stylesheet" href="/dist/css/accessible-autocomplete.css" />
+  <link rel="stylesheet" href="/dist/css/accessible-autocomplete-wrapper.css" />
 
     <meta property="og:image" content="/assets/images/govuk-opengraph-image.png">
   </head>
@@ -533,7 +535,8 @@ const html = `<!DOCTYPE html>
 <script nonce="somenonce">
 window.CICA = {
   SERVICE_URL: '',
-  ANALYTICS_TRACKING_ID: ''
+  ANALYTICS_TRACKING_ID: '',
+  SESSION_DURATION: 
 };
 </script>
 <script src="/govuk-frontend/all.js"></script>
