@@ -33,8 +33,9 @@ nunjucks
             express: app
         }
     )
-    .addGlobal('CW_GA_TRACKING_ID', process.env.CW_GA_TRACKING_ID) // gaTrackingId
-    .addGlobal('CW_URL', process.env.CW_URL); // serviceUrl
+    .addGlobal('CW_GA_TRACKING_ID', process.env.CW_GA_TRACKING_ID)
+    .addGlobal('CW_URL', process.env.CW_URL)
+    .addGlobal('CW_SESSION_DURATION', process.env.CW_SESSION_DURATION);
 
 app.use((req, res, next) => {
     res.locals.nonce = nanoid();

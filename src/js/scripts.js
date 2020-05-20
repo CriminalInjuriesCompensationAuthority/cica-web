@@ -1,4 +1,3 @@
-/* global SESSION_DURATION */
 import createCicaGa from '../modules/ga';
 import {createAutocomplete} from '../modules/autocomplete/autocomplete';
 import createCookieBanner from '../modules/cookie-banner';
@@ -52,8 +51,8 @@ import createTimeoutModal from '../modules/modal-timeout';
                 // length (rounded down to the nearest 1000).
                 // e.g. a session length of 15 minutes results in a modal being
                 // shown at 10 minutes, and 14 minutes.
-                Math.floor((SESSION_DURATION * (2 / 3)) / 1000) * 1000,
-                Math.floor((SESSION_DURATION * (14 / 15)) / 1000) * 1000
+                Math.floor((window.CICA.SESSION_DURATION * (2 / 3)) / 1000) * 1000,
+                Math.floor((window.CICA.SESSION_DURATION * (14 / 15)) / 1000) * 1000
             ]
         });
     }

@@ -1,4 +1,3 @@
-/* global SESSION_DURATION */
 import AjaxRequest from '../../../node_modules/ajax-request';
 import Modal from '../../../components/cica/modal/modal';
 import CustomEvent from '../../../node_modules/custom-event';
@@ -97,7 +96,7 @@ function createTimeoutModal(window) {
         );
 
         timeRemainingElements.forEach(el => {
-            updateTimeRemainingText(el, SESSION_DURATION, 1000, settings.dialogBox);
+            updateTimeRemainingText(el, window.CICA.SESSION_DURATION, 1000, settings.dialogBox);
         });
 
         if (settings.dialogBoxResumeCTA) {
