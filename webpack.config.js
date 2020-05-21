@@ -15,14 +15,6 @@ module.exports = {
         path: path.resolve(__dirname, 'public/dist/js')
     },
     devtool: 'none',
-    node: {
-        // you get this error due to how ajax-request module works
-        //     ERROR in ./node_modules/file-system/file-system.js
-        //     Module not found: Error: Can't resolve 'fs' in '/usr/src/app/node_modules/file-system'
-        // this tells webpack to ignore `fs` stuff. we don't need it anyway.
-        // https://github.com/webpack-contrib/css-loader/issues/447
-        fs: 'empty'
-    },
     module: {
         rules: [
             {
