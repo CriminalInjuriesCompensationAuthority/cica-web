@@ -1,4 +1,4 @@
-import AjaxRequest from '../../../node_modules/ajax-request';
+import {get} from '../../../node_modules/axios/dist/axios.min';
 import Modal from '../../../components/cica/modal/modal';
 import CustomEvent from '../../../node_modules/custom-event';
 import {ms, s, m} from '../../../node_modules/time-convert';
@@ -40,7 +40,8 @@ function createTimeoutModal(window) {
         window.clearTimeout(timeoutsArray.pop()); // remove last item in the array as it has done its job.
         const newTimeRemaining = Math.round((timeRemaining - interval) / interval) * interval;
         // if there is an repeating interval, and if the time remaining
-        // still has a value that can be reduced by `interval`.
+        // still has a value that can be reduced by `interval` then
+        // update things.
         if (interval && timeRemaining >= interval) {
             const timeout = setTimeout(
                 updateTimeRemainingText,
@@ -60,28 +61,28 @@ function createTimeoutModal(window) {
 
     function resumeClickHandler(settings) {
         // get a valid html response - this will go to our custom 404 page.
-        AjaxRequest('/something', err => {
-            if (err) {
+        get('/something')
+            .then(() => {
+                settings.dialogBoxResumeCTA.removeEventListener('click', resumeClickHandler);
+                timeoutsArray.forEach(x => {
+                    window.clearTimeout(x);
+                });
+                timeoutsArray = [];
+                modal.close();
+                // eslint-disable-next-line no-use-before-define
+                setUpModal({
+                    dialogBox: settings.dialogBox,
+                    modalOptions: settings.modalOptions,
+                    showIn: settings.showIn,
+                    closed: settings.closed,
+                    dialogBoxResumeCTA: settings.dialogBoxResumeCTA,
+                    onTimeout: settings.onTimeout
+                });
+            })
+            .catch(() => {
                 const event = new CustomEvent('MODAL_ERROR_RESUME_FAILURE');
                 settings.dialogBox.dispatchEvent(event);
-            }
-
-            settings.dialogBoxResumeCTA.removeEventListener('click', resumeClickHandler);
-            timeoutsArray.forEach(x => {
-                window.clearTimeout(x);
             });
-            timeoutsArray = [];
-            modal.close();
-            // eslint-disable-next-line no-use-before-define
-            setUpModal({
-                dialogBox: settings.dialogBox,
-                modalOptions: settings.modalOptions,
-                showIn: settings.showIn,
-                closed: settings.closed,
-                dialogBoxResumeCTA: settings.dialogBoxResumeCTA,
-                onTimeout: settings.onTimeout
-            });
-        });
     }
 
     function setUpModal(settings) {

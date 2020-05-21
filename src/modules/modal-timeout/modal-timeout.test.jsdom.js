@@ -10,15 +10,14 @@ window.CICA = {
     SESSION_DURATION: 3000
 };
 
-jest.mock('../../../node_modules/ajax-request/index', () => {
-    return jest.fn().mockImplementation((url, cb) => {
-        cb({
-            err: 'some error',
-            body: null,
-            res: null
-        });
-    });
+jest.mock('../../../node_modules/axios/dist/axios.min', () => {
+    return {
+        get: () => {
+            return Promise.resolve('something went right');
+        }
+    };
 });
+
 describe('Timeout Modal', () => {
     describe('happy path', () => {
         it('should initialise a modal', () => {
