@@ -16,15 +16,13 @@
         "lint:fix": "eslint --fix .",
         "buildRun:dev": "npm run build:dev && node ./bin/www",
         "copy:css": "rm -rf /public/dist/css || true && mkdir -p public/dist/css && cp -r ./src/modules/**/*.css public/dist/css/",
-        "copy:js": "cp node_modules/govuk-frontend/govuk/all.js public/dist/js/all.js && rm -rf /public/dist/js || true && mkdir -p public/dist/js && cp -r ./src/modules/**/vendor/*.js public/dist/js/"
+        "copy:js": "rm -rf /public/dist/js || true && mkdir -p public/dist/js && cp -r ./src/modules/**/vendor/*.js public/dist/js/"
     },
     "dependencies": {
         "@ministryofjustice/frontend": "0.0.17-alpha",
-        "axios": "^0.19.2",
         "client-sessions": "github:CriminalInjuriesCompensationAuthority/node-client-sessions#v0.9.0",
         "cookie-parser": "~1.4.3",
         "csurf": "^1.10.0",
-        "custom-event": "^1.0.1",
         "debounce": "^1.2.0",
         "debug": "~2.6.9",
         "express": "~4.16.0",
@@ -37,14 +35,15 @@
         "morgan": "~1.9.0",
         "nanoid": "^2.1.10",
         "nunjucks": "^3.2.1",
-        "q-transformer": "github:CriminalInjuriesCompensationAuthority/q-transformer.git#v1.0.0",
-        "time-convert": "0.0.2"
+        "q-transformer": "github:CriminalInjuriesCompensationAuthority/q-transformer.git#v1.0.0"
     },
     "devDependencies": {
         "@babel/core": "^7.7.4",
         "@babel/preset-env": "^7.7.4",
+        "axios": "^0.19.2",
         "babel-loader": "^8.0.6",
         "core-js": "^3.5.0",
+        "custom-event": "^1.0.1",
         "eslint": "^6.8.0",
         "eslint-config-airbnb-base": "^14.0.0",
         "eslint-config-prettier": "^6.9.0",
@@ -60,6 +59,7 @@
         "prettier": "^1.19.1",
         "q-base-config": "github:CriminalInjuriesCompensationAuthority/q-base-config#v0.9.0",
         "supertest": "^4.0.2",
+        "time-convert": "0.0.2",
         "webpack": "^4.41.2",
         "webpack-cli": "^3.3.10"
     },
