@@ -63,5 +63,9 @@
     "applicant-are-you-claiming-for-expenses": "p-applicant-are-you-claiming-for-expenses",
     "transition": "p--transition",
     "transition-no-phone-or-email": "p--transition-no-phone-or-email",
+    "applicant-have-you-returned-to-work": "p-applicant-have-you-returned-to-work",
+    "applicant-work-details-option": "p-applicant-work-details-option",
+    "applicant-return-to-work-date": "p-applicant-return-to-work-date",
+    "context-money": "p--context-money",
     "system": "system"
 }
