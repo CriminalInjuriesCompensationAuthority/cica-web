@@ -1,4 +1,18 @@
 {
+    "applicant-injury-locations-general": "p-applicant-injury-locations-general",
+    "applicant-injury-head-face-neck-general": "p-applicant-injury-head-face-neck-general",
+    "applicant-injury-head-face-neck-local": "p-applicant-injury-head-face-neck-local",
+    "applicant-injury-torso-general": "p-applicant-injury-torso-general",
+    "end": "p-end",
+
+
+
+
+
+
+
+
+
     "applicant-declaration": "p-applicant-declaration",
     "applicant-british-citizen-or-eu-national": "p-applicant-british-citizen-or-eu-national",
     "applicant-are-you-18-or-over": "p-applicant-are-you-18-or-over",
