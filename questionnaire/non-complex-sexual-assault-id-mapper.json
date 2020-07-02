@@ -68,5 +68,9 @@
     "applicant-select-head-injuries": "p-applicant-select-head-injuries",
     "applicant-select-face-injuries": "p-applicant-select-face-injuries",
     "applicant-select-neck-injuries": "p-applicant-select-neck-injuries",
+    "applicant-select-eye-injuries": "p-applicant-select-eye-injuries",
+    "applicant-select-ear-injuries": "p-applicant-select-ear-injuries",
+    "applicant-select-nose-injuries": "p-applicant-select-nose-injuries",
+    "applicant-select-mouth-injuries": "p-applicant-select-mouth-injuries",
     "system": "system"
 }
