@@ -57,7 +57,8 @@ app.use(
                     'www.googletagmanager.com'
                 ],
                 imgSrc: ["'self'", 'data:', 'www.google-analytics.com'],
-                objectSrc: ["'none'"]
+                objectSrc: ["'none'"],
+                frameSrc: ['*.ccng.bt.com']
             }
         },
         hsts: {

@@ -3,6 +3,8 @@ import {createAutocomplete} from '../modules/autocomplete/autocomplete';
 import createCookieBanner from '../modules/cookie-banner';
 import createCookiePreference from '../modules/cookie-preference';
 import createTimeoutModal from '../modules/modal-timeout';
+import createNewWindowAnchors from '../modules/new-window-anchors';
+import createWebChat from '../modules/web-chat';
 
 (() => {
     const cookiePreference = createCookiePreference('_prefs', ['essential', 'analytics']);
@@ -57,4 +59,7 @@ import createTimeoutModal from '../modules/modal-timeout';
             ]
         });
     }
+
+    createNewWindowAnchors(window.document.querySelectorAll('[open-new-window]'));
+    createWebChat(window.document.querySelector('#chat-iframe'));
 })();
