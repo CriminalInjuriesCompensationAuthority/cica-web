@@ -153,6 +153,79 @@ describe('Data capture service endpoints', () => {
                     });
                 });
             });
+            describe('/police-forces', () => {
+                describe('GET', () => {
+                    describe('200', () => {
+                        it('Should respond with a 200 status', async () => {
+                            const response = await request(app).get('/police-forces');
+                            expect(response.statusCode).toBe(200);
+                        });
+                        it('Should render a specific content on the page', async () => {
+                            const response = await request(app).get('/police-forces');
+                            const actual = response.res.text.replace(/\s+/g, '');
+                            const pageHeading = `<h1 class="govuk-heading-xl">Police forces</h1>`.replace(
+                                /\s+/g,
+                                ''
+                            );
+                            expect(actual).toContain(pageHeading);
+                        });
+                    });
+                });
+            });
+            describe('/start-chat', () => {
+                describe('GET', () => {
+                    describe('200', () => {
+                        it('Should respond with a 200 status', async () => {
+                            const response = await request(app).get('/start-chat');
+                            expect(response.statusCode).toBe(200);
+                        });
+                        it('Should render a specific content on the page', async () => {
+                            const response = await request(app).get('/start-chat');
+                            const actual = response.res.text.replace(/\s+/g, '');
+                            const pageHeading = `<h1 class="govuk-heading-xl">Chat to an adviser online</h1>`.replace(
+                                /\s+/g,
+                                ''
+                            );
+                            expect(actual).toContain(pageHeading);
+                        });
+                    });
+                });
+            });
+            describe('/chat', () => {
+                describe('GET', () => {
+                    describe('200', () => {
+                        it('Should respond with a 200 status', async () => {
+                            const response = await request(app).get('/chat');
+                            expect(response.statusCode).toBe(200);
+                        });
+                        it('Should render a specific content on the page', async () => {
+                            const response = await request(app).get('/chat');
+                            const actual = response.res.text.replace(/\s+/g, '');
+                            const pageContent = `<iframe id="chat-iframe"`.replace(/\s+/g, '');
+                            expect(actual).toContain(pageContent);
+                        });
+                    });
+                });
+            });
+            describe('/thisdoesntexist', () => {
+                describe('GET', () => {
+                    describe('200', () => {
+                        it('Should respond with a 200 status', async () => {
+                            const response = await request(app).get('/thisdoesntexist');
+                            expect(response.statusCode).toBe(200);
+                        });
+                        it('Should render a specific content on the page', async () => {
+                            const response = await request(app).get('/thisdoesntexist');
+                            const actual = response.res.text.replace(/\s+/g, '');
+                            const pageHeading = `<h1 class="govuk-heading-xl">Page not found</h1>`.replace(
+                                /\s+/g,
+                                ''
+                            );
+                            expect(actual).toContain(pageHeading);
+                        });
+                    });
+                });
+            });
         });
     });
 
