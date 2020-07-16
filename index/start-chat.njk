@@ -4,15 +4,18 @@
 
 {% block innerContent %}
 
-    <h1 class="govuk-heading-xl">Chat to our customer support team online</h1>
+    <h1 class="govuk-heading-xl">Chat to us online</h1>
 
-    <p class="govuk-body">You can use this chat for general enquiries.</p>
-    <p class="govuk-body">You <strong>cannot</strong> discuss the details of your claim here. Instead, you can:</p>
+    <p class="govuk-body">You <strong>cannot</strong> get an update on your claim here.</p>
+    <p class="govuk-body">You can get help with:</p>
+    
     <ul class="govuk-list govuk-list--bullet">
-        <li>email <a href="mailto:info@cica.gov.uk" class="govuk-link">info@cica.gov.uk</a></li>
-        <li>call 0300 003 3601</li>
+        <li>how to make a claim</li>
+        <li>what you can claim for</li>
+        <li>where to send evidence</li>
     </ul>
-    <p class="govuk-body">The chat is available from 10am to 3pm, Monday to Friday.</p>
+
+    <p class="govuk-body">The chat is open from 10am to 3pm, Monday to Friday.</p>
 
     {#
         web chat querystring parameters:
@@ -25,5 +28,14 @@
          * url - URL
     #}
     <a href="/chat?recId=6221d2d5-b8e2-4103-bc7d-c5f66eb2a3dc" class="govuk-button" open-new-window='{"width": "380", "height": "700"}'>Start a chat</a>
+
+    <h2 class="govuk-heading-l">Other ways to contact us</h2>
+
+    <p class="govuk-body">Discuss your claim by:</p>
+
+    <ul class="govuk-list govuk-list--bullet">
+        <li>email at <a href="mailto:info@cica.gov.uk" class="govuk-link">info@cica.gov.uk</a></li>
+        <li>telephone on 0300 003 3601</li>
+    </ul>
 
 {% endblock %}
