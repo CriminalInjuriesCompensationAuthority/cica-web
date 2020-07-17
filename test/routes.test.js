@@ -182,7 +182,7 @@ describe('Data capture service endpoints', () => {
                         it('Should render a specific content on the page', async () => {
                             const response = await request(app).get('/start-chat');
                             const actual = response.res.text.replace(/\s+/g, '');
-                            const pageHeading = `<h1 class="govuk-heading-xl">Chat to our customer support team online</h1>`.replace(
+                            const pageHeading = `<h1 class="govuk-heading-xl">Chat to us online</h1>`.replace(
                                 /\s+/g,
                                 ''
                             );
