@@ -152,6 +152,115 @@
     display: none;
 }
 
+#endChat {
+    color: #fff !important;
+}
+
+#endChatDialog {
+
+}
+
+.modal-header {
+    background: #000 !important;
+    border-radius: 0;
+}
+
+.modal-header button {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 1.1875;
+    box-sizing: border-box;
+    display: table;
+    position: relative;
+    width: auto !important;
+    padding: 8px 10px 7px;
+    border: 2px solid transparent;
+    border-radius: 0;
+    color: #000;
+    background-color: #fff;
+    text-align: center;
+    vertical-align: top;
+    cursor: pointer;
+    -webkit-appearance: none;
+    margin: 0 !important;
+    opacity: 1 !important;
+}
+
+.modal-header .close {
+    padding: 6px 10px;
+}
+.modal-header .close:hover,
+.modal-header .close:active {
+    background: #005a30;
+}
+
+
+
+.modal-footer {
+    border: 0;
+}
+
+.modal-footer button {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 1.1875;
+    box-sizing: border-box;
+    position: relative;
+    width: auto !important;
+    padding: 8px 10px 7px;
+    border: 2px solid transparent;
+    border-radius: 0;
+    color: #ffffff;
+    background-color: #00703c;
+    box-shadow: 0 2px 0 #002d18;
+    text-align: center;
+    vertical-align: top;
+    cursor: pointer;
+    -webkit-appearance: none;
+    margin: 0 !important;
+}
+
+.modal-content {
+    border-radius: 0;
+    outline: 2px solid #ffdd00;
+}
+
+.bubbleTime {
+    color: #030303 !important;
+}
+
+#chatMsgs .infoMsg {
+    color: #030303 !important;
+}
+
+.callerMsg {
+    background-color: #1d70b8 !important;
+}
+
+.agentMsg, .supervisorMsg {
+    background-color: #dee0e2 !important;
+    color: #030303 !important;
+}
+
+.bg-danger {
+    background: #fff !important;
+}
+
+.text-danger #statusText {
+    color: #fff !important;
+}
+
+.text-warning #statusText {
+    color: #F47738 !important;
+}
+.text-success #statusText {
+    color: #45E367 !important;
+}
+
 /* To style the pulse around the status circle */
 @-webkit-keyframes pulse {
   0% {
