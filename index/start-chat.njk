@@ -2,7 +2,7 @@
 {% from "components/radios/macro.njk" import govukRadios %}
 {% from "moj/components/banner/macro.njk" import mojBanner %}
 
-{% block pageTitle %}Start live chat - {{ super() }}{% endblock %}
+{% block pageTitle %}Chat to our customer support team online - {{ super() }}{% endblock %}
 
 {% block innerContent %}
 
@@ -29,8 +29,9 @@
          * region - string
          * url - URL
     #}
-    <a href="/chat?recId=6221d2d5-b8e2-4103-bc7d-c5f66eb2a3dc" class="govuk-button" open-new-window='{"width": "380", "height": "700"}'>Start a chat</a>
-
+    {% if liveChatActive %}
+        <a href="/chat?recId=6221d2d5-b8e2-4103-bc7d-c5f66eb2a3dc" class="govuk-button" open-new-window='{"width": "380", "height": "700"}'>Start a chat</a>
+    {% endif %}
     <h2 class="govuk-heading-l">Other ways to contact us</h2>
 
     <p class="govuk-body">Discuss your claim by:</p>

@@ -1,6 +1,7 @@
 'use strict';
 
 const express = require('express');
+const createDateHelper = require('./dateHelper');
 
 const router = express.Router();
 
@@ -25,11 +26,32 @@ router.get('/accessibility-statement', (req, res) => {
 });
 
 router.get('/start-chat', (req, res) => {
-    res.render('start-chat.njk');
+    const dateHelper = createDateHelper();
+    const currentDate = new Date();
+    const currentTime = `2020-01-01T${currentDate.getHours()}:${currentDate.getMinutes()}:${currentDate.getSeconds()}.000Z`;
+    const liveChatStartTime = `2020-01-01T${process.env.CW_LIVECHAT_START_TIME}Z`;
+    const liveChatEndTime = `2020-01-01T${process.env.CW_LIVECHAT_END_TIME}Z`;
+
+    const liveChatActive = dateHelper.isBetween(currentTime, liveChatStartTime, liveChatEndTime);
+
+    res.render('start-chat.njk', {
+        liveChatActive
+    });
 });
 
 router.get('/chat', (req, res) => {
-    res.render('chat-iframe.njk');
+    const dateHelper = createDateHelper();
+    const currentDate = new Date();
+    const currentTime = `2020-01-01T${currentDate.getHours()}:${currentDate.getMinutes()}:${currentDate.getSeconds()}.000Z`;
+    const liveChatStartTime = `2020-01-01T${process.env.CW_LIVECHAT_START_TIME}Z`;
+    const liveChatEndTime = `2020-01-01T${process.env.CW_LIVECHAT_END_TIME}Z`;
+
+    const liveChatActive = dateHelper.isBetween(currentTime, liveChatStartTime, liveChatEndTime);
+    if (liveChatActive) {
+        res.render('chat-iframe.njk');
+    } else {
+        res.render('404.njk');
+    }
 });
 
 router.get('*', (req, res) => {
