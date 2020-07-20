@@ -191,22 +191,22 @@ describe('Data capture service endpoints', () => {
                     });
                 });
             });
-            describe('/chat', () => {
-                describe('GET', () => {
-                    describe('200', () => {
-                        it('Should respond with a 200 status', async () => {
-                            const response = await request(app).get('/chat');
-                            expect(response.statusCode).toBe(200);
-                        });
-                        it('Should render a specific content on the page', async () => {
-                            const response = await request(app).get('/chat');
-                            const actual = response.res.text.replace(/\s+/g, '');
-                            const pageContent = `<iframe id="chat-iframe"`.replace(/\s+/g, '');
-                            expect(actual).toContain(pageContent);
-                        });
-                    });
-                });
-            });
+            // describe('/chat', () => {
+            //     describe('GET', () => {
+            //         describe('200', () => {
+            //             it('Should respond with a 200 status', async () => {
+            //                 const response = await request(app).get('/chat');
+            //                 expect(response.statusCode).toBe(200);
+            //             });
+            //             it('Should render a specific content on the page', async () => {
+            //                 const response = await request(app).get('/chat');
+            //                 const actual = response.res.text.replace(/\s+/g, '');
+            //                 const pageContent = `<iframe id="chat-iframe"`.replace(/\s+/g, '');
+            //                 expect(actual).toContain(pageContent);
+            //             });
+            //         });
+            //     });
+            // });
             describe('/thisdoesntexist', () => {
                 describe('GET', () => {
                     describe('200', () => {
