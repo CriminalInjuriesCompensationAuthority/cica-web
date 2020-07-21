@@ -171,8 +171,19 @@ a:focus,
     border-radius: 0 !important;
 }
 
-#txtMsg {
+#txtMsg { 
+    width: 100%;
+    border: 2px solid #000 !important;
+    resize: none;
+    outline: none;
+    line-height: normal;
+    min-height: 70px;
     background: #fff !important;
+}
+
+#txtMsg:focus {
+    outline: 2px solid #ffdd00 !important;
+    outline-offset: 0;
 }
 
 #lbl_InfoMsg {
@@ -332,6 +343,9 @@ textarea:focus {
 }
 .text-success #statusText {
     color: #45E367 !important;
+}
+.bg-success {
+    background-color: #45E367 !important
 }
 
 /* To style the pulse around the status circle */

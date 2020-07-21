@@ -27,22 +27,22 @@ router.get('/accessibility-statement', (req, res) => {
 
 router.get('/start-chat', (req, res) => {
     const dateHelper = createDateHelper();
-    const currentDate = new Date();
-    const currentTime = `2020-01-01T${currentDate.getHours()}:${currentDate.getMinutes()}:${currentDate.getSeconds()}.000Z`;
+    const currentTime = `2020-01-01T${dateHelper.getFullTime(new Date())}Z`;
     const liveChatStartTime = `2020-01-01T${process.env.CW_LIVECHAT_START_TIME}Z`;
     const liveChatEndTime = `2020-01-01T${process.env.CW_LIVECHAT_END_TIME}Z`;
 
     const liveChatActive = dateHelper.isBetween(currentTime, liveChatStartTime, liveChatEndTime);
 
-    res.render('start-chat.njk', {
-        liveChatActive
-    });
+    if (liveChatActive) {
+        res.render('start-chat.njk');
+    } else {
+        res.render('chat-disabled.njk');
+    }
 });
 
 router.get('/chat', (req, res) => {
     const dateHelper = createDateHelper();
-    const currentDate = new Date();
-    const currentTime = `2020-01-01T${currentDate.getHours()}:${currentDate.getMinutes()}:${currentDate.getSeconds()}.000Z`;
+    const currentTime = `2020-01-01T${dateHelper.getFullTime(new Date())}Z`;
     const liveChatStartTime = `2020-01-01T${process.env.CW_LIVECHAT_START_TIME}Z`;
     const liveChatEndTime = `2020-01-01T${process.env.CW_LIVECHAT_END_TIME}Z`;
 
@@ -50,7 +50,7 @@ router.get('/chat', (req, res) => {
     if (liveChatActive) {
         res.render('chat-iframe.njk');
     } else {
-        res.render('404.njk');
+        res.render('chat-disabled.njk');
     }
 });
 
