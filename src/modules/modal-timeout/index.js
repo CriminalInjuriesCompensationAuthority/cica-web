@@ -1,7 +1,7 @@
-import {get} from '../../../node_modules/axios/dist/axios.min';
+import * as axios from '../../../node_modules/axios/dist/axios.min';
 import Modal from '../../../components/cica/modal/modal';
 import CustomEvent from '../../../node_modules/custom-event';
-import {ms, s, m} from '../../../node_modules/time-convert';
+import * as timeConvert from '../../../node_modules/time-convert'; // {ms, s, m}
 
 function createTimeoutModal(window) {
     // We need to clear the timeouts when an application is resumed. This is
@@ -15,7 +15,7 @@ function createTimeoutModal(window) {
     let modal;
 
     function msToMinutesAndSeconds(duration) {
-        const result = ms.to(m, s)(duration);
+        const result = timeConvert().ms.to(timeConvert().m, timeConvert().s)(duration);
         const minutes = result[0];
         const seconds = result[1];
         let minutesText = '';
@@ -61,7 +61,8 @@ function createTimeoutModal(window) {
 
     function resumeClickHandler(settings) {
         // get a valid html response - this will go to our custom 404 page.
-        get('/something')
+        axios()
+            .get('/something')
             .then(() => {
                 settings.dialogBoxResumeCTA.removeEventListener('click', resumeClickHandler);
                 timeoutsArray.forEach(x => {
