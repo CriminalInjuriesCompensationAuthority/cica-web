@@ -8,7 +8,7 @@
         "sass": "node-sass src/sass/all.scss public/stylesheets/all.css && node-sass src/sass/all-ie8.scss public/stylesheets/all-ie8.css",
         "test": "npm run test:node && npm run test:dom",
         "test:dom": "jest --config=jest.config.jsdom.js",
-        "test:node": "jest --config=jest.config.js --verbose",
+        "test:node": "jest --config=jest.config.js",
         "coverage": "jest --coverage",
         "build:dev": "npm run copy:css && npm run copy:js && webpack --config webpack.config.js --mode development",
         "build": "npm run copy:css && npm run copy:js && webpack --config webpack.config.prod.js --mode production",
@@ -18,6 +18,15 @@
         "copy:css": "rm -rf /public/dist/css || true && mkdir -p public/dist/css && cp -r ./src/modules/**/*.css public/dist/css/",
         "copy:js": "rm -rf /public/dist/js || true && mkdir -p public/dist/js && cp -r ./src/modules/**/vendor/*.js public/dist/js/"
     },
+    "browserslist": [
+        "defaults",
+        "maintained node versions",
+        "last 2 versions",
+        "ie >= 9",
+        "Safari >= 12",
+        "ios_saf >= 10",
+        "iOS >= 10"
+    ],
     "dependencies": {
         "@ministryofjustice/frontend": "0.0.17-alpha",
         "client-sessions": "github:CriminalInjuriesCompensationAuthority/node-client-sessions#v0.9.0",
