@@ -1,6 +1,8 @@
 import * as jsCookies from '../../../node_modules/js-cookie/src/js.cookie';
 
 function createCookiePreference(cookieName, allowedPreferences) {
+    // jsCookies = jsCookies();
+
     const cookieConfig = {
         path: '/',
         expires: 365,
@@ -8,7 +10,7 @@ function createCookiePreference(cookieName, allowedPreferences) {
     };
 
     function get(preferenceName) {
-        const cookieValue = jsCookies().getJSON(cookieName) || {};
+        const cookieValue = jsCookies.getJSON(cookieName) || {};
         return {
             name: preferenceName,
             value: cookieValue[preferenceName]
@@ -22,13 +24,13 @@ function createCookiePreference(cookieName, allowedPreferences) {
             );
         }
 
-        const cookieValue = jsCookies().getJSON(cookieName) || {};
+        const cookieValue = jsCookies.getJSON(cookieName) || {};
         cookieValue[preferenceName] = preferenceValue;
-        jsCookies().set(cookieName, cookieValue, cookieConfig);
+        jsCookies.set(cookieName, cookieValue, cookieConfig);
     }
 
     function getCookie() {
-        return jsCookies().get(cookieName);
+        return jsCookies.get(cookieName);
     }
 
     function acceptAll() {

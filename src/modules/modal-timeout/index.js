@@ -4,6 +4,7 @@ import CustomEvent from '../../../node_modules/custom-event';
 import * as timeConvert from '../../../node_modules/time-convert'; // {ms, s, m}
 
 function createTimeoutModal(window) {
+    // timeConvert = timeConvert();
     // We need to clear the timeouts when an application is resumed. This is
     // due the same element being used each time the "session timing out" modal
     // appears. If we don't clear the timeouts, then there will be as many updates
@@ -15,7 +16,7 @@ function createTimeoutModal(window) {
     let modal;
 
     function msToMinutesAndSeconds(duration) {
-        const result = timeConvert().ms.to(timeConvert().m, timeConvert().s)(duration);
+        const result = timeConvert.ms.to(timeConvert.m, timeConvert.s)(duration);
         const minutes = result[0];
         const seconds = result[1];
         let minutesText = '';
@@ -61,7 +62,7 @@ function createTimeoutModal(window) {
 
     function resumeClickHandler(settings) {
         // get a valid html response - this will go to our custom 404 page.
-        axios()
+        axios
             .get('/something')
             .then(() => {
                 settings.dialogBoxResumeCTA.removeEventListener('click', resumeClickHandler);
