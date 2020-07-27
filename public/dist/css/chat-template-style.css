@@ -147,6 +147,13 @@ a:focus,
     display: block !important;
     color: #ffffff;
 }
+
+#CookiesPolicy {
+    font-size: 15px;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
 /* #lbl_CookiePolicylink {
     color: #1d70b8 !important;
     text-decoration: underline;

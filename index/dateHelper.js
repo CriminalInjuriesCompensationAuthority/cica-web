@@ -23,9 +23,16 @@ function createDateHelper() {
             .padStart(3, '0')}`;
     }
 
+    function includesToday(listOfWeekDays) {
+        let today = new Date();
+        today = today.getDay();
+        return listOfWeekDays.includes(today);
+    }
+
     return Object.freeze({
         isBetween,
-        getFullTime
+        getFullTime,
+        includesToday
     });
 }
 

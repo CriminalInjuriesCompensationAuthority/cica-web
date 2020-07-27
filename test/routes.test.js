@@ -188,6 +188,9 @@ describe('Data capture service endpoints', () => {
                                     },
                                     isBetween: () => {
                                         return true;
+                                    },
+                                    includesToday: () => {
+                                        return true;
                                     }
                                 }))
                             );
@@ -210,6 +213,9 @@ describe('Data capture service endpoints', () => {
                                         return '17:30:17.135';
                                     },
                                     isBetween: () => {
+                                        return false;
+                                    },
+                                    includesToday: () => {
                                         return false;
                                     }
                                 }))
@@ -244,6 +250,9 @@ describe('Data capture service endpoints', () => {
                                     },
                                     isBetween: () => {
                                         return true;
+                                    },
+                                    includesToday: () => {
+                                        return true;
                                     }
                                 }))
                             );
@@ -263,6 +272,9 @@ describe('Data capture service endpoints', () => {
                                         return '17:30:17.135';
                                     },
                                     isBetween: () => {
+                                        return false;
+                                    },
+                                    includesToday: () => {
                                         return false;
                                     }
                                 }))

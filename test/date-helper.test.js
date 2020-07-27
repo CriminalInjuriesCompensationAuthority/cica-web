@@ -20,5 +20,23 @@ describe('Date Helper', () => {
             const result = dateHelper.isBetween(dateToCompare, start, end);
             expect(result).toEqual(false);
         });
+        it('should get the full 24-hour time for a date', () => {
+            const dateHelper = createDateHelper();
+            const date = new Date(2020, 6, 10, 3, 20, 45, 885);
+            const result = dateHelper.getFullTime(date);
+            expect(result).toEqual('03:20:45.885');
+        });
+        it('should check if today is included in a provided string list of days', () => {
+            const dateHelper = createDateHelper();
+            const dayList = '1,2,3,4,5,6,7';
+            const result = dateHelper.includesToday(dayList);
+            expect(result).toEqual(true);
+        });
+        it('should check if today is included in a provided array list of days', () => {
+            const dateHelper = createDateHelper();
+            const dayList = [1, 2, 3, 4, 5, 6, 7];
+            const result = dateHelper.includesToday(dayList);
+            expect(result).toEqual(true);
+        });
     });
 });
