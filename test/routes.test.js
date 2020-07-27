@@ -144,7 +144,7 @@ describe('Data capture service endpoints', () => {
                         it('Should render a page with the accessibility statement page heading', async () => {
                             const response = await request(app).get('/accessibility-statement');
                             const actual = response.res.text.replace(/\s+/g, '');
-                            const pageHeading = `<h1 class="govuk-heading-xl">Accessibility statement for Claim criminal injuries compensation</h1>`.replace(
+                            const pageHeading = `<h1 class="govuk-heading-xl">Accessibility for Claim criminal injuries compensation</h1>`.replace(
                                 /\s+/g,
                                 ''
                             );
