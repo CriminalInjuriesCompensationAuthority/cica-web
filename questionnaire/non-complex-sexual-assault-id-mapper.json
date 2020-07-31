@@ -105,5 +105,10 @@
     "applicant-treatment-for-physical-injuries": "p-applicant-treatment-for-physical-injuries",
     "applicant-medical-help": "p-applicant-medical-help",
     "applicant-treatment-address": "p-applicant-treatment-address",
+    "applicant-unable-to-work-duration": "p-applicant-unable-to-work-duration",
+    "applicant-job-when-crime-happened": "p-applicant-job-when-crime-happened",
+    "applicant-work-details-option": "p-applicant-work-details-option",
+    "applicant-expenses": "p-applicant-expenses",
+    "context-money": "p--context-money",
     "system": "system"
 }
