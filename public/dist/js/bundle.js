@@ -141,7 +141,7 @@ function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableTo
 
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 
-function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(n); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
 
 function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter); }
 
@@ -5874,7 +5874,7 @@ function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableTo
 
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 
-function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(n); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
 
 function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter); }
 
@@ -6052,7 +6052,7 @@ function createCookieBanner(window, cookiePreference) {
     cookieBannerButtonAcceptAll: '#cookie-banner-accept-all'
   };
 
-  var combinedOptions = _objectSpread({}, defaultOptions, {}, options);
+  var combinedOptions = _objectSpread(_objectSpread({}, defaultOptions), options);
 
   var cookieBannerElement = window.document.querySelector(combinedOptions.cookieBannerElement);
 
@@ -6306,6 +6306,16 @@ function createCicaGa(window) {
       });
     }, 100), false);
   }
+
+  function elementClickHandler(element, options) {
+    element.addEventListener('click', function () {
+      send({
+        action: 'click',
+        category: options.category,
+        label: options.label
+      });
+    }, false);
+  }
   /* * ******************************************* * */
 
   /* * * TRACKING HANDLERS END                   * * */
@@ -6319,6 +6329,14 @@ function createCicaGa(window) {
     trackableElements.forEach(function (element) {
       if (element.classList.contains('ga-event--scrollthreshold')) {
         scrollThresholdHandler();
+        return;
+      }
+
+      if (element.classList.contains('ga-event--click')) {
+        elementClickHandler(element, {
+          label: element.getAttribute('tracking-label') || element.innerText,
+          category: element.getAttribute('tracking-category') || element.tagName
+        });
         return;
       }
 
@@ -6736,7 +6754,7 @@ function createNewWindowAnchors(elements) {
         options = {};
       }
 
-      var combinedOptions = Object.entries(_objectSpread({}, defaultOptions, {}, options)).map(function (x) {
+      var combinedOptions = Object.entries(_objectSpread(_objectSpread({}, defaultOptions), options)).map(function (x) {
         return "".concat(x[0], "=").concat(x[1]);
       }).join(', ');
       anchor.addEventListener('click', function (e) {
