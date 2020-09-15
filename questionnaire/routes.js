@@ -45,6 +45,7 @@ router
             let answers = {};
             const sectionId = formHelper.addPrefix(req.params.section);
             const response = await qService.getSection(req.cicaSession.questionnaireId, sectionId);
+
             if (
                 response.body.data &&
                 response.body.data[0].attributes &&

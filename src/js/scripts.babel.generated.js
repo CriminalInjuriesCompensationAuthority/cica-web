@@ -572,12 +572,15 @@ var _newWindowAnchors = _interopRequireDefault(require("../modules/new-window-an
 
 var _liveChat = _interopRequireDefault(require("../modules/live-chat"));
 
+var _history = require("../modules/history");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 // eslint-disable-next-line import/no-extraneous-dependencies
 // eslint-disable-next-line import/no-extraneous-dependencies
 (function () {
   var cookiePreference = (0, _cookiePreference.default)('_prefs', ['essential', 'analytics']);
+  var history = (0, _history.createBrowserHistory)();
 
   if (cookiePreference.get('analytics').value === '1') {
     var cicaGa = (0, _ga.default)(window);
@@ -621,7 +624,11 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
       // e.g. a session length of 15 minutes results in a modal being
       // shown at 10 minutes, and 14 minutes.
       Math.floor(window.CICA.SESSION_DURATION * (2 / 3) / 1000) * 1000, Math.floor(window.CICA.SESSION_DURATION * (14 / 15) / 1000) * 1000]
-    });
+    }); // Add page to history api
+
+    var sectionId = pathName.split('/')[2];
+    var backLink = "/apply/previous/".concat(sectionId);
+    history.replace(backLink);
   }
 
   (0, _newWindowAnchors.default)(window.document.querySelectorAll('[open-new-window]'));

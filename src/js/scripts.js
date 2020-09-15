@@ -10,9 +10,12 @@ import createCookiePreference from '../modules/cookie-preference';
 import createTimeoutModal from '../modules/modal-timeout';
 import createNewWindowAnchors from '../modules/new-window-anchors';
 import createLiveChat from '../modules/live-chat';
+import { createBrowserHistory } from '../modules/history';
 
 (() => {
     const cookiePreference = createCookiePreference('_prefs', ['essential', 'analytics']);
+    let history = createBrowserHistory();
+
     if (cookiePreference.get('analytics').value === '1') {
         const cicaGa = createCicaGa(window);
         cicaGa.setUpGAEventTracking();
@@ -63,6 +66,12 @@ import createLiveChat from '../modules/live-chat';
                 Math.floor((window.CICA.SESSION_DURATION * (14 / 15)) / 1000) * 1000
             ]
         });
+
+        // Add page to history api
+        const sectionId = pathName.split('/')[2];
+        const backLink = `/apply/previous/${sectionId}`;
+        history.replace(backLink);
+
     }
 
     createNewWindowAnchors(window.document.querySelectorAll('[open-new-window]'));
