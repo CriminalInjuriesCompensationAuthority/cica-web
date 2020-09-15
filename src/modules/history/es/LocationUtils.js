@@ -1,7 +1,7 @@
-'use strict';
-
 import warnAboutDeprecatedESMImport from './warnAboutDeprecatedESMImport.js';
+
+import {LocationUtils} from '../esm/history.js';
+
 warnAboutDeprecatedESMImport('LocationUtils');
 
-import { LocationUtils } from '../esm/history.js';
 export default LocationUtils;

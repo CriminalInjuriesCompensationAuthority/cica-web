@@ -1,7 +1,7 @@
-'use strict';
-
 import warnAboutDeprecatedESMImport from './warnAboutDeprecatedESMImport.js';
+
+import {createTransitionManager} from '../esm/history.js';
+
 warnAboutDeprecatedESMImport('createTransitionManager');
 
-import { createTransitionManager } from '../esm/history.js';
 export default createTransitionManager;

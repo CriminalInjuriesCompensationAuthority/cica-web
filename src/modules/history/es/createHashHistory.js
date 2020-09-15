@@ -1,7 +1,7 @@
-'use strict';
-
 import warnAboutDeprecatedESMImport from './warnAboutDeprecatedESMImport.js';
+
+import {createHashHistory} from '../esm/history.js';
+
 warnAboutDeprecatedESMImport('createHashHistory');
 
-import { createHashHistory } from '../esm/history.js';
 export default createHashHistory;

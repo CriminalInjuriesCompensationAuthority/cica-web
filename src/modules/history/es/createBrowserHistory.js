@@ -1,7 +1,7 @@
-'use strict';
-
 import warnAboutDeprecatedESMImport from './warnAboutDeprecatedESMImport.js';
+
+import {createBrowserHistory} from '../esm/history.js';
+
 warnAboutDeprecatedESMImport('createBrowserHistory');
 
-import { createBrowserHistory } from '../esm/history.js';
 export default createBrowserHistory;

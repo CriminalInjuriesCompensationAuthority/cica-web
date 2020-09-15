@@ -1,7 +1,7 @@
-'use strict';
-
 import warnAboutDeprecatedESMImport from './warnAboutDeprecatedESMImport.js';
+
+import {createMemoryHistory} from '../esm/history.js';
+
 warnAboutDeprecatedESMImport('createMemoryHistory');
 
-import { createMemoryHistory } from '../esm/history.js';
 export default createMemoryHistory;
