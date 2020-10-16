@@ -13,7 +13,7 @@ function questionnaireService() {
                 data: {
                     type: 'questionnaires',
                     attributes: {
-                        templateName: 'sexual-assault'
+                        templateName: 'application'
                     }
                 }
             }
