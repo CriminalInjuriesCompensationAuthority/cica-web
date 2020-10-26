@@ -43,7 +43,7 @@ spec:
             - name: CW_LIVECHAT_END_TIME
               value: '14:00:00.000'
             - name: CW_MAINTENANCE_MESSAGE
-              value: 'The service will be unavailable from 4.30pm to 7pm. Your answers will not be saved if you try to submit your application during this time.'
+              value: 'The service will be unavailable from 5pm to 6pm. Your answers will not be saved if you try to submit your application during this time.'
   selector:
     matchLabels:
       app: webapp-uat
