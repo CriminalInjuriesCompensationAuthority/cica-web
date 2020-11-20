@@ -84,12 +84,14 @@ function questionnaireService() {
                 Authorization: `Bearer ${process.env.CW_DCS_JWT}`
             },
             body: {
-                data: {
-                    type: 'submissions',
-                    attributes: {
-                        questionnaireId
+                data: [
+                    {
+                        type: 'submissions',
+                        attributes: {
+                            questionnaireId
+                        }
                     }
-                }
+                ]
             }
         };
         return service.post(opts);
@@ -114,7 +116,8 @@ function questionnaireService() {
             !result ||
             !result.body ||
             !result.body.data ||
-            !result.body.data.attributes ||
+            !result.body.data.length ||
+            !result.body.data[0].attributes ||
             (result.body.errors && result.body.errors[0].status === 404)
         ) {
             const err = Error(`The service is currently unavailable`);
@@ -124,9 +127,9 @@ function questionnaireService() {
             throw err;
         }
 
-        const {submitted} = result.body.data.attributes;
+        const {submitted} = result.body.data[0].attributes;
         if (submitted) {
-            return result.body.data.attributes;
+            return result.body.data[0].attributes;
         }
 
         // check again.
