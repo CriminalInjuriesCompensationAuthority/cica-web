@@ -1222,5 +1222,114 @@ module.exports = {
         options: {
             outputOrder: ['q-applicant-has-crime-reference-number', 'crn-info']
         }
+    },
+    'p-main-applicant-enter-your-address': {
+        options: {
+            properties: {
+                'q-main-applicant-building-and-street': {
+                    options: {
+                        macroOptions: {
+                            classes: '',
+                            autocomplete: 'address-line1'
+                        }
+                    }
+                },
+                'q-main-applicant-building-and-street-2': {
+                    options: {
+                        macroOptions: {
+                            classes: '',
+                            autocomplete: 'address-line2'
+                        }
+                    }
+                },
+                'q-main-applicant-town-or-city': {
+                    options: {
+                        macroOptions: {
+                            autocomplete: 'address-level2'
+                        }
+                    }
+                },
+                'q-main-applicant-county': {
+                    options: {
+                        macroOptions: {
+                            autocomplete: 'address-level1'
+                        }
+                    }
+                },
+                'q-main-applicant-postcode': {
+                    options: {
+                        macroOptions: {
+                            autocomplete: 'postal-code'
+                        }
+                    }
+                }
+            },
+            outputOrder: [
+                'q-main-applicant-building-and-street',
+                'q-main-applicant-building-and-street-2',
+                'q-main-applicant-town-or-city',
+                'q-main-applicant-county',
+                'q-main-applicant-postcode'
+            ]
+        }
+    },
+    'p-main-applicant-enter-your-name': {
+        options: {
+            outputOrder: [
+                'q-main-applicant-title',
+                'q-main-applicant-first-name',
+                'q-main-applicant-last-name'
+            ],
+            properties: {
+                'q-main-applicant-title': {
+                    options: {
+                        macroOptions: {
+                            autocomplete: 'honorific-prefix'
+                        }
+                    }
+                },
+                'q-main-applicant-first-name': {
+                    options: {
+                        macroOptions: {
+                            autocomplete: 'given-name'
+                        }
+                    }
+                },
+                'q-main-applicant-last-name': {
+                    options: {
+                        macroOptions: {
+                            autocomplete: 'family-name'
+                        }
+                    }
+                }
+            }
+        }
+    },
+    'p-main-applicant-enter-your-email-address': {
+        options: {
+            properties: {
+                'q-main-applicant-enter-your-email-address': {
+                    options: {
+                        macroOptions: {
+                            autocomplete: 'email',
+                            spellcheck: 'false'
+                        }
+                    }
+                }
+            }
+        }
+    },
+    'p-main-applicant-enter-your-telephone-number': {
+        options: {
+            properties: {
+                'q-main-applicant-enter-your-telephone-number': {
+                    options: {
+                        macroOptions: {
+                            autocomplete: 'tel'
+                        }
+                    }
+                }
+            }
+        }
     }
 };

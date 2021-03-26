@@ -134,5 +134,11 @@
     "applicant-describe-incident": "p-applicant-describe-incident",
     "applicant-incident-description": "p-applicant-incident-description",
     "applicant-has-crime-reference-number": "p-applicant-has-crime-reference-number",
+    "context-main-applicant": "p--context-main-applicant",
+    "main-applicant-enter-your-name": "p-main-applicant-enter-your-name",
+    "main-applicant-enter-your-telephone-number": "p-main-applicant-enter-your-telephone-number",
+    "main-applicant-enter-your-email-address": "p-main-applicant-enter-your-email-address",
+    "main-applicant-enter-your-address": "p-main-applicant-enter-your-address",
+    "main-applicant-victim-same-address": "p-main-applicant-victim-same-address",
     "system": "system"
 }
