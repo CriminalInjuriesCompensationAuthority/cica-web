@@ -1331,5 +1331,54 @@ module.exports = {
                 }
             }
         }
+    },
+    'p-main-applicant-confirmation-method': {
+        options: {
+            transformOrder: [
+                'q-main-applicant-enter-your-email-address',
+                'q-main-applicant-enter-your-telephone-number',
+                'q-main-applicant-confirmation-method'
+            ],
+            outputOrder: ['q-main-applicant-confirmation-method'],
+            properties: {
+                'q-main-applicant-confirmation-method': {
+                    options: {
+                        conditionalComponentMap: [
+                            {
+                                itemValue: 'email',
+                                componentIds: ['q-main-applicant-enter-your-email-address']
+                            },
+                            {
+                                itemValue: 'text',
+                                componentIds: ['q-main-applicant-enter-your-telephone-number']
+                            }
+                        ],
+                        additionalMapping: [
+                            {
+                                itemType: 'divider',
+                                itemValue: 'or',
+                                itemIndex: 2
+                            }
+                        ]
+                    }
+                },
+                'q-main-applicant-enter-your-email-address': {
+                    options: {
+                        macroOptions: {
+                            classes: 'govuk-input--width-20',
+                            autocomplete: 'email'
+                        }
+                    }
+                },
+                'q-main-applicant-enter-your-telephone-number': {
+                    options: {
+                        macroOptions: {
+                            classes: 'govuk-input--width-20',
+                            autocomplete: 'tel'
+                        }
+                    }
+                }
+            }
+        }
     }
 };
