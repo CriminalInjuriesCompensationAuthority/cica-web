@@ -100,7 +100,7 @@ function questionnaireService() {
     }
 
     async function getSubmissionStatus(questionnaireId, startingDate) {
-        if (Date.now() - startingDate >= 15000) {
+        if (Date.now() - startingDate >= 3000) {
             const err = Error(`Unable to retrieve questionnaire submission status`);
             err.name = 'CRNNotRetrieved';
             err.statusCode = 500;
@@ -108,7 +108,7 @@ function questionnaireService() {
             throw err;
         }
         const result = await getSubmission(questionnaireId);
-
+        console.log('getSubmission()::', {result: JSON.stringify(result.body.data, null, 4)});
         // dcs down...
         if (
             !result ||

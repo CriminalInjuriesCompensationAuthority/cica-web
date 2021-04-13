@@ -152,6 +152,7 @@ router.route('/submission/confirm').post(async (req, res, next) => {
         );
         return res.redirect(`${req.baseUrl}/${nextSection}`);
     } catch (err) {
+        console.log(err);
         return next(err);
     }
 });
