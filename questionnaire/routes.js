@@ -64,9 +64,10 @@ router
                 }
             }
             // Store section schema as cookie
-            if (response.body){
-                req.cicaSession.currentSchema = response.body.included.filter(section => section.type === 'sections')[0]
-                    .attributes;
+            if (response.body) {
+                req.cicaSession.currentSchema = response.body.included.filter(
+                    section => section.type === 'sections'
+                )[0].attributes;
             }
             const html = formHelper.getSectionHtml(
                 response.body,
@@ -92,8 +93,9 @@ router
             // eslint-disable-next-line no-underscore-dangle
             delete body._csrf;
             // post current schema with answers
-            if (req.cicaSession.currentSchema)
+            if (req.cicaSession.currentSchema) {
                 questionSchema[section] = req.cicaSession.currentSchema;
+            }
             const response = await qService.postSection(
                 req.cicaSession.questionnaireId,
                 sectionId,
