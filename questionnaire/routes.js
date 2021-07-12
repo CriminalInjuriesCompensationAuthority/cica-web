@@ -94,7 +94,7 @@ router
             delete body._csrf;
             // post current schema with answers
             if (req.cicaSession.currentSchema) {
-                questionSchema[section] = req.cicaSession.currentSchema;
+                questionSchema[sectionId] = req.cicaSession.currentSchema;
             }
             const response = await qService.postSection(
                 req.cicaSession.questionnaireId,
