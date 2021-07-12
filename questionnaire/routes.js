@@ -63,6 +63,11 @@ router
                     });
                 }
             }
+            // Store section schema as cookie
+            if (response.body){
+                req.cicaSession.currentSchema = response.body.included.filter(section => section.type === 'sections')[0]
+                    .attributes;
+            }
             const html = formHelper.getSectionHtml(
                 response.body,
                 answers,
@@ -82,13 +87,18 @@ router
         try {
             const sectionId = formHelper.addPrefix(req.params.section);
             const body = formHelper.processRequest(req.body, req.params.section);
+            const questionSchema = {};
             // delete the token from the body to allow AJV to validate the request.
             // eslint-disable-next-line no-underscore-dangle
             delete body._csrf;
+            // post current schema with answers
+            if (req.cicaSession.currentSchema)
+                questionSchema[section] = req.cicaSession.currentSchema;
             const response = await qService.postSection(
                 req.cicaSession.questionnaireId,
                 sectionId,
-                body
+                body,
+                questionSchema
             );
             if (response.statusCode === 201) {
                 // is there a forced redirect

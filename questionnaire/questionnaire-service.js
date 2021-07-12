@@ -31,17 +31,23 @@ function questionnaireService() {
         return service.get(opts);
     }
 
-    function postSection(questionnaireId, section, body) {
+    function postSection(questionnaireId, section, body, schema) {
         const opts = {
             url: `${process.env.CW_DCS_URL}/api/v1/questionnaires/${questionnaireId}/sections/${section}/answers`,
             headers: {
                 Authorization: `Bearer ${process.env.CW_DCS_JWT}`
             },
             body: {
-                data: {
-                    type: 'answers',
-                    attributes: body
-                }
+                data: [
+                    {
+                        type: 'answers',
+                        attributes: body
+                    },
+                    {
+                        type: 'schema',
+                        attributes: schema
+                    }
+                ]
             }
         };
         return service.post(opts);
