@@ -15,7 +15,9 @@ function createCicaGa(window) {
         action: 'click', // <String>
         category: 'category', // <String>
         label: undefined, // <String>
-        value: undefined // non-negative <Integer>
+        value: undefined, // non-negative <Integer>
+        timestamp: undefined,
+        transaction_id: undefined
     };
 
     const cookieConfig = {
@@ -31,7 +33,9 @@ function createCicaGa(window) {
             event_label: gtagOptions.label,
             value: gtagOptions.value,
             event_callback: gtagOptions.callback,
-            non_interaction: gtagOptions.nonInteraction
+            non_interaction: gtagOptions.nonInteraction,
+            transaction_id: gtagOptions.transaction_id,
+            event_timestamp: gtagOptions.timestamp
         });
     }
 
@@ -117,6 +121,54 @@ function createCicaGa(window) {
         }
     }
 
+    // ******************************************
+    // *        GA4 APP TRACKING                *
+    // ******************************************
+
+    function trackApplication() {
+        const isFirstPage = new URLSearchParams(window.location.search).get('utm_source');
+        if (isFirstPage) {
+            const gtagOptions = {
+                type: 'event',
+                action: 'conversion',
+                category: 'application_journey_tracker',
+                label: 'start',
+                nonInteraction: true,
+                transaction_id: window.CICA.CICA_ANALYTICS_ID,
+                timestamp: Date.now()
+            };
+            send(gtagOptions);
+        } else if (window.location.pathname.includes('sign-in/success')) {
+            const gtagOptions = {
+                type: 'event',
+                action: 'conversion',
+                category: 'application_journey_tracker',
+                label: 'save',
+                nonInteraction: true,
+                transaction_id: window.CICA.CICA_ANALYTICS_ID,
+                timestamp: Date.now()
+            };
+            send(gtagOptions);
+        } else if (window.location.pathname.includes('declaration')) {
+            window.addEventListener(
+                'submit',
+                () => {
+                    const gtagOptions = {
+                        type: 'event',
+                        action: 'conversion',
+                        category: 'application_journey_tracker',
+                        label: 'finish',
+                        nonInteraction: true,
+                        transaction_id: window.CICA.CICA_ANALYTICS_ID,
+                        timestamp: Date.now()
+                    };
+                    send(gtagOptions);
+                },
+                false
+            );
+        }
+    }
+
     function recordJourneyDuration() {
         const cookieValue = jsCookies.getJSON('client') || {};
 
@@ -199,6 +251,7 @@ function createCicaGa(window) {
 
         validationError();
         recordJourneyDuration();
+        trackApplication();
     }
 
     return Object.freeze({

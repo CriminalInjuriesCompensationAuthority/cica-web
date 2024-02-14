@@ -50,7 +50,9 @@ router.get('/sign-in/success', requiresAuth(), async (req, res, next) => {
             nextPageUrl: getValidReferrerOrDefault(req?.session?.referrer),
             expiryDate,
             isAuthenticated: accountService.isAuthenticated(req),
-            cspNonce: res.locals.cspNonce
+            cspNonce: res.locals.cspNonce,
+            userId: req.oidc.user.sub,
+            analyticsId: req.session.analyticsId
         });
         accountService.setOwnerId(req.oidc.user.sub);
         return res.send(html);
