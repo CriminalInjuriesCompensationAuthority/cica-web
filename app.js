@@ -156,39 +156,27 @@ app.use(
     })
 );
 
-const cacheTime = 365 * 24 * 60 * 60 * 1000; // the unit is milliseconds
-
-app.use(
-    express.static(path.join(__dirname, 'public'), {
-        maxAge: cacheTime // the unit is milliseconds
-    })
-);
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(
     '/assets',
-    express.static(path.join(__dirname, '/node_modules/govuk-frontend/govuk/assets'), {
-        maxAge: cacheTime
-    })
+    express.static(path.join(__dirname, '/node_modules/govuk-frontend/dist/govuk/assets'))
 );
 app.use(
     '/govuk-frontend/all.css',
-    express.static(path.join(__dirname, '/public/stylesheets/all.css'), {maxAge: cacheTime})
+    express.static(path.join(__dirname, '/public/stylesheets/all.css'))
 );
-app.use(
-    '/govuk-frontend/all-ie8.css',
-    express.static(path.join(__dirname, '/public/stylesheets/all-ie8.css'), {maxAge: cacheTime})
-);
+
 app.use(
     '/govuk-frontend/all.js',
-    express.static(path.join(__dirname, '/node_modules/govuk-frontend/govuk/all.js'), {
-        maxAge: cacheTime
-    })
+    express.static(
+        path.join(__dirname, '/node_modules/govuk-frontend/dist/govuk/govuk-frontend.min.js')
+    )
 );
+
 app.use(
     '/moj-frontend/all.js',
-    express.static(path.join(__dirname, '/node_modules/@ministryofjustice/frontend/moj/all.js'), {
-        maxAge: cacheTime
-    })
+    express.static(path.join(__dirname, '/node_modules/@ministryofjustice/frontend/moj/all.js'))
 );
 
 app.use(

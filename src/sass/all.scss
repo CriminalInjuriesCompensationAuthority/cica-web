@@ -1,4 +1,4 @@
-@import "../../node_modules/govuk-frontend/govuk/all";
+@import "../../node_modules/govuk-frontend/dist/govuk/all";
 @import "../modules/cookie-banner/cookie-banner";
 @import "../../components/cica/modal/modal";
 @import "../modules/live-chat/live-chat";
@@ -7,3 +7,5 @@
 @import "../../account/sass/all";
 @import "../../node_modules/@ministryofjustice/frontend/moj/components/sortable-table/_sortable-table";
 @import "../../components/govuk/phase-banner/phase-banner";
+
+$govuk-new-typography-scale: true;
