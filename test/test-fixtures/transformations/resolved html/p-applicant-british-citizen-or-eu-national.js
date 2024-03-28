@@ -52,7 +52,10 @@ const html = `<!DOCTYPE html>
         }
         gtag('js', new Date());
         gtag('set', {cookie_flags: 'SameSite=Lax;Secure'});
-        gtag('config', '');
+        gtag('config', '', {
+          'user_id': '',
+          'debug_mode': true
+        });
     </script>
 
       <a href="#main-content" class="govuk-skip-link">Skip to main content</a>
@@ -521,7 +524,8 @@ const html = `<!DOCTYPE html>
 <script nonce="somenonce">
 window.CICA = {
   SERVICE_URL: 'http://www.b44e2eaa-baf5-47aa-8ac9-5d23ee2a7297.gov.uk',
-  ANALYTICS_TRACKING_ID: ''
+  ANALYTICS_TRACKING_ID: '',
+  CICA_ANALYTICS_ID: ''
 };
 </script>
 <script nonce="somenonce" src="/govuk-frontend/all.js"></script>
