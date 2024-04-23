@@ -198,11 +198,17 @@ router
                 sectionId
             );
 
-            const progressEntry = response?.body?.data?.[0]?.attributes;
-            if (progressEntry && progressEntry.sectionId === null && progressEntry.url === null) {
-                return res.render('incompatible.njk', {
-                    isAuthenticated: accountService.isAuthenticated(req)
-                });
+            const progressEntryData = response?.body?.data?.[0];
+
+            if (progressEntryData) {
+                if (
+                    progressEntryData.attributes.sectionId === null &&
+                    progressEntryData.attributes.url === null
+                ) {
+                    return res.render('incompatible.njk', {
+                        isAuthenticated: accountService.isAuthenticated(req)
+                    });
+                }
             }
 
             req.session.referrer = req.originalUrl;
