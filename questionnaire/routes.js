@@ -212,7 +212,6 @@ router
             }
 
             req.session.referrer = req.originalUrl;
-
             const html = formHelper.getSectionHtml(
                 response.body,
                 req.csrfToken(),
